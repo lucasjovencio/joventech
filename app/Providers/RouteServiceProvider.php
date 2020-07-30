@@ -21,7 +21,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/painel';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -46,7 +46,25 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapPainelRoutes();
+
         //
+    }
+
+
+    /**
+     * Define the "web" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapPainelRoutes()
+    {
+        Route::middleware(['web','super.admin'])
+            ->prefix('painel')
+            ->namespace($this->namespace."\Admin")
+            ->group(base_path('routes/painel.php'));
     }
 
     /**
