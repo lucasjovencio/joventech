@@ -21,6 +21,8 @@ class CreatePublicaosTable extends Migration
             $table->string('imagem_destaque');
             $table->unsignedBigInteger('users_id')->index();
             $table->foreign('users_id')->references('id')->on('users');
+            $table->unsignedBigInteger('tipo_publicacao')->index();
+            $table->foreign('tipo_publicacao')->references('id')->on('tipo_categorias');
             $table->dateTime('publicado_em');
             $table->enum('visibilidade', ['Publico', 'Privado']);
             $table->timestamps();

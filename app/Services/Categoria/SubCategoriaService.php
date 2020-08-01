@@ -23,8 +23,8 @@ class SubCategoriaService
 
     public function getSubCategoriasDataTable(Object $request,$id)
     {
-        if(!$subcategorias = $this->getRedis("sub-categorias{$id}"))
-            $subcategorias = $this->setRedis("sub-categorias{$id}",$this->repo->allArrayParents($id));
+        if(!$subcategorias = $this->getRedis("subcategorias{$id}"))
+            $subcategorias = $this->setRedis("subcategorias{$id}",$this->repo->allArrayParents($id));
 
         return DataTables::of($subcategorias)
                 ->addIndexColumn()

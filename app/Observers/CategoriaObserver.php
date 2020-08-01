@@ -76,7 +76,7 @@ class CategoriaObserver
     private function setRedisObserve(Categoria $categoria)
     {
         if($categoria->isParent()){
-            $this->setRedis("subcategorias{$categoria->id}",$this->repo->allArrayParents($categoria->id));
+            $this->setRedis("subcategorias{$categoria->categorias_id}",$this->repo->allArrayParents($categoria->categorias_id));
         }else{
             $this->setRedis('categorias',$this->repo->allArrayCategorias());
         }

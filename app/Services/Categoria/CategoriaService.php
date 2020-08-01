@@ -50,4 +50,10 @@ class CategoriaService
                 ->make(true);
     }
 
+    public function getCategoriasSubCategorias($id)
+    {
+        return $this->getCollectRedis('categorias')->where('tipo.id',$id)->map(function ($collection, $key) {
+            return collect($collection)->put('subcategoria',$this->getCollectRedis("subcategorias{$collection->id}"));
+        });
+    }
 }

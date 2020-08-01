@@ -17,15 +17,17 @@ Route::get('/', function () {
     return view('adm.dashboard');
 });
 
-Route::get('/dashboard', function () {
-    return view('adm.dashboard');
-});
 
+Route::group(['prefix' => 'laravel-filemanager'], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 
 Route::prefix('publicacoes')->group(function(){
     Route::resource('tipo-categoria','TipoCategoriaController');
     Route::get('tipo-categoria/select2/json','TipoCategoriaController@selectJson')->name('tipo.categoria.select2');
     Route::resource('categoria','CategoriaController');
+    Route::get('categoria/json/{id?}','CategoriaController@categoriaJson')->name('categoria.json');
     Route::resource('sub-categoria','SubCategoriaController');
     Route::resource('publicacao','PublicacaoController');
+    Route::get('publicacao/categoria/json/{id?}','PublicacaoController@categoriaJson')->name('publicacao.categoria.json');
 });

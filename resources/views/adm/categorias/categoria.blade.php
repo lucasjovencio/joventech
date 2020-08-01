@@ -3,8 +3,6 @@
 @section('css')
     <link href="{{ asset('datatable-plugins/datatables.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
-
-    
 @endsection
 
 @section('main')

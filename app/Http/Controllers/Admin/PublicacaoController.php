@@ -4,61 +4,38 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Publicao;
-use Yajra\DataTables\Facades\DataTables;
+use App\Models\Publicacao;
+use App\Services\Categoria\PublicacaoCategoriaService;
+use App\Services\Publicacao\PublicacaoService;
+use App\Traits\RedisTrait;
 
 class PublicacaoController extends Controller
 {
+    use RedisTrait;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request,PublicacaoService $publicacaoService)
     {
         if($request->ajax()){
-            return DataTables::of(Publicao::all())
-            ->addColumn('titulo', function($row){
-                return $row->titulo ?? '';
-            })
-            ->addColumn('visibilidade', function($row){
-                return  '';
-            })
-            ->addColumn('postadoem', function($row){
-                return  '';
-            })
-            ->addColumn('autor', function($row){
-                return  '';
-            })
-            ->addColumn('action', function($row){
-                $btn = '';
-                return $btn;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+            return $publicacaoService->getAllPublicacoes($request);
         }
         return view('adm.publicacoes.index');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('adm.publicacoes.create');
-    }
-
+    
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,PublicacaoService $publicacaoService)
     {
-        //
+        $publicacaoService->create($request);
+        return redirect()->route('publicacao.index')->with('success','Publicação criada com sucesso!');
     }
 
     /**
@@ -67,20 +44,9 @@ class PublicacaoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,PublicacaoService $publicacaoService)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('adm.publicacoes.show',['publicacao'=>$this->findRedis('publicacoes',$id)]);
     }
 
     /**
@@ -90,9 +56,10 @@ class PublicacaoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id,PublicacaoService $publicacaoService)
     {
-        //
+        $publicacaoService->update($id,$request);
+        return redirect()->back()->with('success','Publicação atualizada com sucesso!');
     }
 
     /**
@@ -103,6 +70,18 @@ class PublicacaoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Publicacao::id($id)->firstOrFail()->delete();
+        return redirect()->back()->with('success','Publicação removida com sucesso!');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function categoriaJson($id,PublicacaoCategoriaService $publicacaoCategoriaService)
+    {
+        return response()->json($publicacaoCategoriaService->getRedisPublicacaoCategorias($id),200);
     }
 }

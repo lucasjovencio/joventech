@@ -13,8 +13,12 @@ class CreatePublicaoCategoriasTable extends Migration
      */
     public function up()
     {
-        Schema::create('publicao_categorias', function (Blueprint $table) {
+        Schema::create('publicacao_categorias', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('publicacoes_id')->index();
+            $table->foreign('publicacoes_id')->references('id')->on('publicacoes');
+            $table->unsignedBigInteger('categorias_id')->index();
+            $table->foreign('categorias_id')->references('id')->on('categorias');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreatePublicaoCategoriasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('publicao_categorias');
+        Schema::dropIfExists('publicacao_categorias');
     }
 }

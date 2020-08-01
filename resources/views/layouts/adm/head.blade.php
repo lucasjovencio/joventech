@@ -70,9 +70,10 @@
 		}
 
 		.select2-selection{
+			background-color: #fff0 !important;
+			border-color: #2b3553 !important;
+			border-radius: 4px;
             width: 100%;
-            background-color: #FFFFFF;
-            border: 1px solid #DDDDDD !important;
             border-radius: 4px;
             color: #66615b;
             line-height: normal;
@@ -109,6 +110,10 @@
         }
         .dataTables_filter,.dataTables_paginate{
             float: right;
+		}
+		select:focus {
+			color: #000 !important;
+			background-color: #fff !important;
 		}
 		.table{
           width: 100% !important;

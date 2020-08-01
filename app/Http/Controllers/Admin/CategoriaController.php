@@ -76,4 +76,15 @@ class CategoriaController extends Controller
         Categoria::id($id)->firstOrFail()->delete();
         return redirect()->back()->with('success','Categoria removida com sucesso!');
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function categoriaJson($id,CategoriaService $categoriaService)
+    {
+        return response()->json($categoriaService->getCategoriasSubCategorias($id),200);
+    }
 }

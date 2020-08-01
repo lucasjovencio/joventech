@@ -16,8 +16,13 @@ Trait RedisTrait
         return \json_decode(Redis::get($key));
     }
 
+    private function getCollectRedis(string $key)
+    {
+        return collect($this->getRedis($key));
+    }
+
     private function findRedis(string $key,$id)
     {
-        return collect($this->getRedis($key))->firstWhere('id',$id);
+        return $this->getCollectRedis($key)->firstWhere('id',$id);
     }
 }

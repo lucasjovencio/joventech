@@ -49,19 +49,21 @@
         </div>
     </div>
     
-    <form action="{{ route('publicacao.store') }}" method="post">
+    <form action="{{ route('publicacao.update',['publicacao'=>$publicacao->id]) }}" method="post">
+        @method('PUT')
         @csrf
+
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <img id="img-capa" style="max-height: 250px" class="img-responsive" src="{{ asset('imgs/artistic-5379496_640.jpg') }}" alt="foto de capa">
+                    <img id="img-capa" style="max-height: 250px" class="img-responsive" src="{{ $publicacao->imagem_destaque ?? asset('imgs/artistic-5379496_640.jpg') }}" alt="foto de capa">
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Título</label>
-                            <input name="titulo" name="publicado_em" type="text" class="form-control" 
-                                placeholder="Título da publicação" value="">
+                            <input name="titulo" type="text" class="form-control" 
+                                placeholder="Título da publicação" value="{{ $publicacao->titulo ?? '' }}">
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -72,29 +74,31 @@
                                     <i class="fa fa-picture-o"></i> Escolha
                                 </a>
                             </span>
-                            <input readonly id="thumbnail" class="form-control button-file" type="text" name="imagem_destaque">
+                            <input readonly id="thumbnail" class="form-control button-file" type="text" name="imagem_destaque" value="{{ $publicacao->imagem_destaque ?? '' }}">
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Data da publicação</label>
-                            <input type="date" class="form-control" placeholder=""
-                                value="">
+                            <input type="date" name="publicado_em" class="form-control" placeholder=""
+                                value="{{ \Carbon\Carbon::parse($publicacao->publicado_em)->format('Y-m-d') }}">
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="visibilidade">Visibilidade</label>
                             <select name="visibilidade" id="visibilidade" class="form-control">
-                                <option value="1">Visivel</option>
-                                <option value="0">Privado</option>
+                                <option @if($publicacao->visibilidade == 'Publico') selected @endif value="1">Visivel</option>
+                                <option @if($publicacao->visibilidade == 'Privado') selected @endif value="0">Privado</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Tipo de publicação</label>
-                            <select class="select2 select2-ajax-tipo-categorias" data-placeholder="Tipo de publicação" name="tipo_publicacao"></select>
+                            <select class="select2 select2-ajax-tipo-categorias" data-placeholder="Tipo de publicação" name="tipo_publicacao">
+                                <option value="{{ $publicacao->tipo_publicacao }}">{{ $publicacao->tipo->nome }}</option>
+                            </select>
                         </div>
                     </div>
 
@@ -115,7 +119,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="resumo">Resumo</label>
-                                        <textarea id="resumo" name="resumo" class="form-control my-editor">{!! old('resumo') !!}</textarea>
+                                        <textarea id="resumo" name="resumo" class="form-control my-editor">{!! old('resumo',$publicacao->resumo) !!}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -124,14 +128,14 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="conteudo">Conteudo</label>
-                                        <textarea id="conteudo" name="conteudo" class="form-control my-editor">{!! old('conteudo') !!}</textarea>
+                                        <textarea id="conteudo" name="conteudo" class="form-control my-editor">{!! old('conteudo',$publicacao->conteudo) !!}</textarea>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-fill btn-primary">Publicar</button>
+                        <button type="submit" class="btn btn-fill btn-primary">Atualizar</button>
                     </div>
                 </div>
             </div>
@@ -248,10 +252,22 @@
             $('.select2-ajax-tipo-categorias').on('select2:select', function (e) { 
                 createCategorias(e.params.data.id);
             });
-            // $("#thumbnail").on('change',function(e){
-            //     console.log(e)
-            //     // $("#img-capa").attr('src',$(e).val());
-            // });
+
+            $.ajax({
+                url: "{{ route('publicacao.categoria.json',['id'=>$publicacao->id]) }}",
+                type: 'GET',
+                data: {
+                    '_token':'{{csrf_token()}}',
+                },
+                success:function(data){
+                    console.log(data)
+                    createCategorias({{ $publicacao->tipo_publicacao }},data)
+                },
+                error:function(data){
+                    console.log(data)
+                }
+            });
+            
         })(jQuery);
 
         $('#lfm').filemanager('image', {prefix: route_prefix});
@@ -293,7 +309,7 @@
 
         lfm('lfm2', 'file', {prefix: route_prefix});
 
-        function createCategorias(id)
+        function createCategorias(id,selecionados = [])
         {
             $.ajax({
                 url: "{{ route('categoria.json') }}/"+id,
@@ -309,9 +325,10 @@
                     for(key in data)
                     {
                         const categoria = data[key];
+                        let checked = (selecionados.find(selecionado => selecionado.categorias_id === categoria.id)) ? 'checked' : '';
                         $("#categorias").append(`
                             <div class="ml-3">
-                                <input type="checkbox" id="categoria${categoria.id}" value="${categoria.id}" name="categorias[]">
+                                <input ${checked} type="checkbox" id="categoria${categoria.id}" value="${categoria.id}" name="categorias[]">
                                 <label for="categoria${categoria.id}">${categoria.nome}</label>
                                 <div id="sub${categoria.id}"></div>
                             </div>
@@ -319,37 +336,24 @@
                         for(key2 in categoria.subcategoria)
                         {
                             const subcategoria = categoria.subcategoria[key2];
+                            checked = (selecionados.find(selecionado => selecionado.categorias_id === subcategoria.id)) ? 'checked' : '';
                             $("#sub"+categoria.id).append(`
                                 <div class="ml-3">
-                                    <input type="checkbox" id="categoria${subcategoria.id}" value="${subcategoria.id}" name="categorias[]">
+                                    <input ${checked} type="checkbox" id="categoria${subcategoria.id}" value="${subcategoria.id}" name="categorias[]">
                                     <label for="categoria${subcategoria.id}">${subcategoria.nome}</label>
                                 </div>
                             `); 
                         }
                     }
-                    // <div class="ml-3">
-                    //     <input type="checkbox" id="scales" name="scales"
-                    //             checked>
-                    //     <label for="scales">Scales</label>
-
-                    //     <div class="ml-3">
-                    //         <input type="checkbox" id="scales1" name="scales1"
-                    //                 checked>
-                    //         <label for="scales1">Scales</label>
-                    //     </div>
-                    //     <div class="ml-3">
-                    //         <input type="checkbox" id="scales2" name="scales2"
-                    //                 checked>
-                    //         <label for="scales2">Scales</label>
-                    //     </div>
-                    // </div>
                 },
                 error:function(data){
                     console.log(data)
                 }
             });
         }
-            
+
+        
+       
     </script>
 @endsection
 

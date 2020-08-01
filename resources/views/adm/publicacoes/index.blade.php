@@ -88,7 +88,11 @@
                 }
             });
         }
-       
+        
+        $(document).ready(function() {
+            fetch_data();
+        });
+
         $('.filternome').on('keyup',function(){
             if(searchAjax){
                 searchAjax=false;
