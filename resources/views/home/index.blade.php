@@ -1,6 +1,16 @@
 @extends('layouts.landing.main')
 
 @section('css')
+	<style>
+		.card-blog .card-description{
+			max-height: 100px;
+			overflow: hidden;
+			word-break: break-word;
+		}
+		.card-blog .card-category-box {
+			position: initial;
+		}
+	</style>
 @endsection
 
 @section('main')
@@ -378,100 +388,37 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-4">
-					<div class="card card-blog">
-						<div class="card-img">
-							<a href="blog-single.html"><img src="img/post-1.jpg" alt="" class="img-fluid"></a>
-						</div>
-						<div class="card-body">
-							<div class="card-category-box">
-								<div class="card-category">
-									<h6 class="category">Travel</h6>
+				@foreach($blogs as $blog)
+					<div class="col-md-4">
+						<div class="card card-blog">
+							<div class="card-img">
+								<a href="blog-single.html"><img src="{{ $blog->imagem_destaque }}" alt="{{ $blog->titulo }}" class="img-fluid"></a>
+							</div>
+							<div class="card-body">
+								<div class="card-category-box">
+									@foreach($blog->categorias as $categoria)
+										<div class="card-category">
+											<h6 class="category">{{ $categoria->categoria->nome }}</h6>
+										</div>
+									@endforeach
 								</div>
+								<h3 class="card-title"><a href="{{ route('home.blog',['id'=>$blog->id]) }}">{{ $blog->titulo }}</a></h3>
+								<p class="card-description">{!! $blog->resumo !!}</p>
 							</div>
-							<h3 class="card-title"><a href="blog-single.html">See more ideas about Travel</a></h3>
-							<p class="card-description">
-								Proin eget tortor risus. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis
-								a pellentesque nec,
-								egestas non nisi.
-							</p>
-						</div>
-						<div class="card-footer">
-							<div class="post-author">
-								<a href="#">
-									<img src="img/testimonial-2.jpg" alt="" class="avatar rounded-circle">
-									<span class="author">Morgan Freeman</span>
-								</a>
-							</div>
-							<div class="post-date">
-								<span class="ion-ios-clock-outline"></span> 10 min
+							<div class="card-footer">
+								<div class="post-author">
+									<a href="#">
+										<img src="img/testimonial-2.jpg" alt="" class="avatar rounded-circle">
+										<span class="author">{{ $blog->autor->name }}</span>
+									</a>
+								</div>
+								<div class="post-date">
+									<span class="ion-ios-clock-outline"></span> {{ $blog->data_publicacao ?? '#' }}
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card card-blog">
-						<div class="card-img">
-							<a href="blog-single.html"><img src="img/post-1.jpg" alt="" class="img-fluid"></a>
-						</div>
-						<div class="card-body">
-							<div class="card-category-box">
-								<div class="card-category">
-									<h6 class="category">Travel</h6>
-								</div>
-							</div>
-							<h3 class="card-title"><a href="blog-single.html">See more ideas about Travel</a></h3>
-							<p class="card-description">
-								Proin eget tortor risus. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis
-								a pellentesque nec,
-								egestas non nisi.
-							</p>
-						</div>
-						<div class="card-footer">
-							<div class="post-author">
-								<a href="#">
-									<img src="img/testimonial-2.jpg" alt="" class="avatar rounded-circle">
-									<span class="author">Morgan Freeman</span>
-								</a>
-							</div>
-							<div class="post-date">
-								<span class="ion-ios-clock-outline"></span> 10 min
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card card-blog">
-						<div class="card-img">
-							<a href="blog-single.html"><img src="img/post-1.jpg" alt="" class="img-fluid"></a>
-						</div>
-						<div class="card-body">
-							<div class="card-category-box">
-								<div class="card-category">
-									<h6 class="category">Travel</h6>
-								</div>
-							</div>
-							<h3 class="card-title"><a href="blog-single.html">See more ideas about Travel</a></h3>
-							<p class="card-description">
-								Proin eget tortor risus. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis
-								a pellentesque nec,
-								egestas non nisi.
-							</p>
-						</div>
-						<div class="card-footer">
-							<div class="post-author">
-								<a href="#">
-									<img src="img/testimonial-2.jpg" alt="" class="avatar rounded-circle">
-									<span class="author">Morgan Freeman</span>
-								</a>
-							</div>
-							<div class="post-date">
-								<span class="ion-ios-clock-outline"></span> 10 min
-							</div>
-						</div>
-					</div>
-				</div>
-			
+				@endforeach
 			</div>
 			<div class="row justify-content-md-center">
 				<p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="#contact" role="button">Mais publicações</a></p>

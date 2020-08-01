@@ -81,10 +81,17 @@ class PublicacaoService
             'conteudo'          => $request->conteudo           ?? '',
             'imagem_destaque'   => $request->imagem_destaque    ?? '',
             'tipo_publicacao'   => $request->tipo_publicacao,
-            'publicado_em'      => $request->publicado_em       ?? now()->format('Y-m-d h:i:s'),
+            'publicado_em'      => ($request->publicado_em)     ? $request->publicado_em." 23:59:59" : now()->format('Y-m-d h:i:s'),
             'visibilidade'      => ($request->visibilidade)     ? 'Publico' : 'Privado',
         ]);
         $this->publicacaoCategoriaService->removeCategorias($id);
         $this->publicacaoCategoriaService->vinculaPublicacaoCategoria($publicacao->id,$request->categorias);
+    }
+
+    public function getBlogLast3()
+    {
+        return $this->getCollectRedis('publicacoes')->where('tipo.nome',"Blog")->map(function ($collection, $key) {
+            return collect($collection)->put('categorias',$this->getCollectRedis("publicacao{$collection->id}-categorias"));
+        })->sortByDesc('publicado_em')->take(3);
     }
 }

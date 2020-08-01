@@ -191,7 +191,7 @@
         };
 
         tinymce.init(editor_config_conteudo);
-        tinymce.init(editor_config_resumo);
+        // tinymce.init(editor_config_resumo);
 
         (function( $ )
         {

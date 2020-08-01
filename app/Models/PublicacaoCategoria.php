@@ -15,7 +15,7 @@ class PublicacaoCategoria extends Model
 
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class,'id','categorias_id')->select('id','nome');
+        return $this->belongsTo(Categoria::class,'categorias_id','id')->select('id','nome');
     }
 
     public function scopeIdPublicacao($query,$id)

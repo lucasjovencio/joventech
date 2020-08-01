@@ -12,15 +12,6 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('home.index');
-});
-
-Route::get('/dashboard', function () {
-    return view('adm.dashboard');
-});
-
 Auth::routes(['verify' => true]);
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/','Web\HomeController@index')->name('home.index');
+Route::get('/blog/{id}','Web\HomeController@blog')->name('home.blog');

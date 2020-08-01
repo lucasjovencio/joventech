@@ -26,6 +26,16 @@ class PublicacaoController extends Controller
         return view('adm.publicacoes.index');
     }
     
+    /**	
+     * Show the form for creating a new resource.	
+     *	
+     * @return \Illuminate\Http\Response	
+     */	
+    public function create()	
+    {	
+        return view('adm.publicacoes.create');	
+    }
+
     /**
      * Store a newly created resource in storage.
      *
