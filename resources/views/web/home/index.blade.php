@@ -408,9 +408,10 @@
 				@foreach($blogs as $blog)
 					<div class="col-md-4">
 						<div class="card card-blog">
-							<div class="card-img">
-								<a href="{{ route('home.blog.show',['id'=>$blog->id]) }}"><img src="{{ $blog->imagem_destaque }}" alt="{{ $blog->titulo }}" class="img-fluid"></a>
-							</div>
+							<a href="{{ route('home.blog.show',['id'=>$blog->id]) }}">
+								<div class="card-img" style="background-image: url('{{ $blog->imagem_destaque }}');height: 200px;background-position: center;background-size: cover;" >
+								</div>
+							</a>
 							<div class="card-body">
 								<div class="card-category-box">
 									@foreach($blog->categorias as $categoria)
