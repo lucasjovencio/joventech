@@ -13,6 +13,15 @@ class PublicacaoCategoria extends Model
         'publicacoes_id','categorias_id'
     ];
 
+    protected $appends = [
+        'nome_categoria'
+    ];
+
+    public function getNomeCategoriaAttribute()
+    {
+        return $this->categoria->nome;
+    }
+
     public function categoria()
     {
         return $this->belongsTo(Categoria::class,'categorias_id','id')->select('id','nome');

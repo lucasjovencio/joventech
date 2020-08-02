@@ -232,4 +232,7 @@ return [
 
     ],
 
+    'disqus' => [
+        'host' => ENV('DISQUS_HOST','')
+    ]
 ];

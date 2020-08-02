@@ -50,10 +50,17 @@ class CategoriaService
                 ->make(true);
     }
 
-    public function getCategoriasSubCategorias($id)
+    public function getCategoriaSubCategorias($id)
     {
         return $this->getCollectRedis('categorias')->where('tipo.id',$id)->map(function ($collection, $key) {
             return collect($collection)->put('subcategoria',$this->getCollectRedis("subcategorias{$collection->id}"));
         });
+    }
+
+    public function getBlogCategoriasSubCategoria()
+    {
+        return \json_decode($this->getCollectRedis('categorias')->where('tipo.nome','Blog')->map(function ($collection, $key) {
+            return collect($collection)->put('subcategoria',$this->getCollectRedis("subcategorias{$collection->id}"));
+        }));
     }
 }

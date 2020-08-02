@@ -85,6 +85,6 @@ class CategoriaController extends Controller
      */
     public function categoriaJson($id,CategoriaService $categoriaService)
     {
-        return response()->json($categoriaService->getCategoriasSubCategorias($id),200);
+        return response()->json($categoriaService->getCategoriaSubCategorias($id),200);
     }
 }

@@ -14,6 +14,23 @@
 @endsection
 
 @section('main')
+	<!--/ Intro Skew Star /-->
+	<div id="home" class="intro route bg-image" style="background-image: url(img/intro-bg.jpg)">
+		<div class="overlay-itro"></div>
+		<div class="intro-content display-table">
+			<div class="table-cell">
+			<div class="container">
+				<!--<p class="display-6 color-d">Hello, world!</p>-->
+				<h1 class="intro-title mb-4">Lucas Jovencio</h1>
+				<p class="intro-subtitle"><span class="text-slider-items">Backend Developer,Web Developer</span><strong class="text-slider"></strong></p>
+				<!--  -->
+				<p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="#contact" role="button">Orçamento</a></p>
+			</div>
+			</div>
+		</div>
+	</div>
+	<!--/ Intro Skew End /-->
+	
     <section id="about" class="about-mf sect-pt4 route">
         <div class="container">
             <div class="row">
@@ -392,7 +409,7 @@
 					<div class="col-md-4">
 						<div class="card card-blog">
 							<div class="card-img">
-								<a href="blog-single.html"><img src="{{ $blog->imagem_destaque }}" alt="{{ $blog->titulo }}" class="img-fluid"></a>
+								<a href="{{ route('home.blog.show',['id'=>$blog->id]) }}"><img src="{{ $blog->imagem_destaque }}" alt="{{ $blog->titulo }}" class="img-fluid"></a>
 							</div>
 							<div class="card-body">
 								<div class="card-category-box">
@@ -402,7 +419,7 @@
 										</div>
 									@endforeach
 								</div>
-								<h3 class="card-title"><a href="{{ route('home.blog',['id'=>$blog->id]) }}">{{ $blog->titulo }}</a></h3>
+								<h3 class="card-title"><a href="{{ route('home.blog.show',['id'=>$blog->id]) }}">{{ $blog->titulo }}</a></h3>
 								<p class="card-description">{!! $blog->resumo !!}</p>
 							</div>
 							<div class="card-footer">

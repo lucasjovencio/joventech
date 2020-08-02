@@ -29,6 +29,10 @@
 		.intro .overlay-itro {
 			background-color: rgb(0 0 0);
 		}
+		.intro-single .overlay-mf{
+			background-color: rgb(0 0 0) !important;
+			opacity: 0.9;
+		}
 		.navbar-b.navbar-reduce .show > .nav-link, .navbar-b.navbar-reduce .active > .nav-link, .navbar-b.navbar-reduce .nav-link.show, .navbar-b.navbar-reduce .nav-link.active {
 			color: rgb(0 0 0);
 		}
