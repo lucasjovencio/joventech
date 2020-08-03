@@ -118,6 +118,71 @@
 		.table{
           width: 100% !important;
         }
+		.select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .choose-file{
+            z-index: 3;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            border: 1px solid transparent;
+            padding: .46rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            margin: -1px -1px 0px 0px;
+        }
+        .choose-file:hover{
+            box-shadow: none !important;
+            transform: initial!important;
+            -webkit-transform: initial!important;
+        }
+        .button-file{
+            font-size: 1rem;
+            line-height: 1.5;
+            background-image: none;
+            background-clip: padding-box;
+            -ms-flex: 1 1 auto;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+        #sendmessage {
+            color: #0078ff;
+            border: 1px solid #0078ff;
+            display: none;
+            text-align: center;
+            padding: 15px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        #errormessage {
+            color: red;
+            display: none;
+            border: 1px solid red;
+            text-align: center;
+            padding: 15px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        #sendmessage.show,
+        #errormessage.show,
+        .show {
+            display: block;
+        }
+
+        .validation {
+            color: red;
+            display: none;
+            margin: 0 0 20px;
+            font-weight: 400;
+            font-size: 13px;
+        }
 	</style>
 	@yield('css')
 </head>

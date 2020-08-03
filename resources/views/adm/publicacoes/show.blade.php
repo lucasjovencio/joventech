@@ -2,40 +2,7 @@
 
 @section('css')
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
-    <style>
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            color: rgba(255, 255, 255, 0.8);
-        }
-        .choose-file{
-            z-index: 3;
-            text-align: center;
-            vertical-align: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            border: 1px solid transparent;
-            padding: .46rem .75rem;
-            font-size: 1rem;
-            line-height: 1.5;
-            border-radius: .25rem;
-            margin: -1px -1px 0px 0px;
-        }
-        .choose-file:hover{
-            box-shadow: none !important;
-            transform: initial!important;
-            -webkit-transform: initial!important;
-        }
-        .button-file{
-            font-size: 1rem;
-            line-height: 1.5;
-            background-image: none;
-            background-clip: padding-box;
-            -ms-flex: 1 1 auto;
-            display: flex;
-            -ms-flex-align: center;
-            align-items: center;
-        }
-    </style>
+    <link href="{{ asset('css/jquery.datetimepicker.css') }}" rel="stylesheet" />
 @endsection
 
 @section('main')
@@ -43,16 +10,17 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title"> Nova publicação</h4>
+                    <h4 class="card-title"> Editar publicação</h4>
                 </div>
             </div>
         </div>
     </div>
     
-    <form action="{{ route('publicacao.update',['publicacao'=>$publicacao->id]) }}" method="post">
+    <form action="{{ route('publicacao.update',['publicacao'=>$publicacao->id]) }}" method="post" class="publicacaoForm">
         @method('PUT')
         @csrf
-
+        <div id="sendmessage">Your message has been sent. Thank you!</div>
+        <div id="errormessage"></div>
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
@@ -60,46 +28,52 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-md-12">
-                        <div class="form-group">
+                        <div class="form-group form-validation">
                             <label>Título</label>
-                            <input name="titulo" type="text" class="form-control" 
-                                placeholder="Título da publicação" value="{{ $publicacao->titulo ?? '' }}">
+                            <input data-rule="required" data-msg="Informe o título da publicação" name="titulo" type="text" class="form-control" 
+                                placeholder="Título da publicação" value="{{ $publicacao->titulo }}">
+                            <div class="validation"></div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label>Imagem de capa</label>
-                        <div class="input-group">
+                        <div class="input-group form-validation">
                             <span class="">
                                 <a id="lfm" data-input="thumbnail" data-preview="img-capa"  class="btn choose-file text-white">
                                     <i class="fa fa-picture-o"></i> Escolha
                                 </a>
                             </span>
-                            <input readonly id="thumbnail" class="form-control button-file" type="text" name="imagem_destaque" value="{{ $publicacao->imagem_destaque ?? '' }}">
+                            <input data-rule="image" readonly data-msg="Informe a capa da publicação"  id="thumbnail" class="form-control button-file" type="text" name="imagem_destaque" value="{{ $publicacao->imagem_destaque ?? '' }}">
                         </div>
+                        <div id="validation-image" class="validation"></div>
+
                     </div>
                     <div class="col-md-12">
-                        <div class="form-group">
+                        <div class="form-group form-validation">
                             <label>Data da publicação</label>
-                            <input type="date" name="publicado_em" class="form-control" placeholder=""
-                                value="{{ \Carbon\Carbon::parse($publicacao->publicado_em)->format('Y-m-d') }}">
+                            <input data-rule="required" data-msg="Informe data de publicação" type="text" class="form-control" placeholder="" value="{{ $publicacao->publicado_em }}" name="publicado_em" id="publicado_em">
+                            <div class="validation"></div>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div class="form-group">
+                        <div class="form-group form-validation">
                             <label for="visibilidade">Visibilidade</label>
-                            <select name="visibilidade" id="visibilidade" class="form-control">
+                            <select data-rule="required" data-msg="Informe a visibilidade" name="visibilidade" id="visibilidade" class="form-control">
+                                <option value="">Selecione...</option>
                                 <option @if($publicacao->visibilidade == 'Publico') selected @endif value="1">Visivel</option>
                                 <option @if($publicacao->visibilidade == 'Privado') selected @endif value="0">Privado</option>
                             </select>
+                            <div class="validation"></div>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div class="form-group">
+                        <div class="form-group form-validation">
                             <label>Tipo de publicação</label>
-                            <select class="select2 select2-ajax-tipo-categorias" data-placeholder="Tipo de publicação" name="tipo_publicacao">
-                                <option value="{{ $publicacao->tipo_publicacao }}">{{ $publicacao->tipo->nome }}</option>
+                            <select data-rule="tipo-dinamico" data-msg="Informe o tipo de publicação"  class="select2 select2-ajax-tipo-categorias" data-placeholder="Tipo de publicação" name="tipo_publicacao">
+                                <option selected value="{{ $publicacao->tipo_publicacao }}">{{ $publicacao->tipo->nome }}</option>
                             </select>
                         </div>
+                        <div id="validationtipo" class="validation"></div>
                     </div>
 
                     <div class="col-md-12">
@@ -117,25 +91,27 @@
                         <form>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div class="form-group form-validation">
                                         <label for="resumo">Resumo</label>
-                                        <textarea id="resumo" name="resumo" class="form-control my-editor">{!! old('resumo',$publicacao->resumo) !!}</textarea>
+                                        <textarea data-rule="minlen:1" data-msg="Informe o resumo" id="resumo" name="resumo" class="form-control my-editor">{!! old('resumo',$publicacao->resumo ?? '') !!}</textarea>
+                                        <div class="validation"></div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div class="form-group form-validation">
                                         <label for="conteudo">Conteudo</label>
-                                        <textarea id="conteudo" name="conteudo" class="form-control my-editor">{!! old('conteudo',$publicacao->conteudo) !!}</textarea>
+                                        <textarea data-rule="minlen:1" data-msg="Informe o conteudo" id="conteudo" name="conteudo" class="form-control my-editor">{!! old('resumo',$publicacao->conteudo ?? '') !!}</textarea>
+                                        <div class="validation"></div>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-fill btn-primary">Atualizar</button>
+                        <button type="submit" class="btn btn-fill btn-primary">Publicar</button>
                     </div>
                 </div>
             </div>
@@ -146,7 +122,20 @@
 @section('js')
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="{{ asset('js/select2.min.js')}} "></script>
+    <script src="{{ asset('js/publicacaoForm.js?v='.time())}} "></script>
+    <script src="{{ asset('js/jquery.datetimepicker.js')}} "></script>
 
+    <script>
+        jQuery(function($){
+            $.datetimepicker.setLocale('pt-BR');
+            $('#publicado_em').datetimepicker({
+                format:'d/m/Y H:i',
+                formatDate:'Y-m-d H:i',
+                value:{{ old('publicado_em') ?? "new Date()" }},
+                lang:'pt-BR'
+            }); 
+        });
+    </script>
     <script>
         const route_prefix = "/filemanager";
         const editor_config_conteudo = 
@@ -260,7 +249,6 @@
                     '_token':'{{csrf_token()}}',
                 },
                 success:function(data){
-                    console.log(data)
                     createCategorias({{ $publicacao->tipo_publicacao }},data)
                 },
                 error:function(data){
@@ -327,8 +315,8 @@
                         const categoria = data[key];
                         let checked = (selecionados.find(selecionado => selecionado.categorias_id === categoria.id)) ? 'checked' : '';
                         $("#categorias").append(`
-                            <div class="ml-3">
-                                <input ${checked} type="checkbox" id="categoria${categoria.id}" value="${categoria.id}" name="categorias[]">
+                            <div class="ml-3 form-validation">
+                                <input data-rule="required" data-msg="Marque pelo menos 1(uma) categoria" ${checked} type="checkbox" id="categoria${categoria.id}" value="${categoria.id}" name="categorias[]">
                                 <label for="categoria${categoria.id}">${categoria.nome}</label>
                                 <div id="sub${categoria.id}"></div>
                             </div>
@@ -338,13 +326,14 @@
                             const subcategoria = categoria.subcategoria[key2];
                             checked = (selecionados.find(selecionado => selecionado.categorias_id === subcategoria.id)) ? 'checked' : '';
                             $("#sub"+categoria.id).append(`
-                                <div class="ml-3">
-                                    <input ${checked} type="checkbox" id="categoria${subcategoria.id}" value="${subcategoria.id}" name="categorias[]">
+                                <div class="ml-3 form-validation">
+                                    <input data-rule="required" data-msg="Marque pelo menos 1(uma) categoria" ${checked} type="checkbox" id="categoria${subcategoria.id}" value="${subcategoria.id}" name="categorias[]">
                                     <label for="categoria${subcategoria.id}">${subcategoria.nome}</label>
                                 </div>
                             `); 
                         }
                     }
+                    $("#categorias").append('<div id="validationCheckboxCategorias" class="validation"></div>');
                 },
                 error:function(data){
                     console.log(data)

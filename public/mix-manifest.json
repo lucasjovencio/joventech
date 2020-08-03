@@ -2,5 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/select2.min.js": "/js/select2.min.js",
-    "/css/select2.min.css": "/css/select2.min.css"
+    "/js/jquery.datetimepicker.js": "/js/jquery.datetimepicker.js",
+    "/css/select2.min.css": "/css/select2.min.css",
+    "/css/jquery.datetimepicker.css": "/css/jquery.datetimepicker.css"
 }

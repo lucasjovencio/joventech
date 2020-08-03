@@ -8,6 +8,7 @@ use App\Models\Publicacao;
 use App\Services\Categoria\PublicacaoCategoriaService;
 use App\Services\Publicacao\PublicacaoService;
 use App\Traits\RedisTrait;
+use App\Http\Requests\StorePublicacaoRequest;
 
 class PublicacaoController extends Controller
 {
@@ -42,7 +43,7 @@ class PublicacaoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,PublicacaoService $publicacaoService)
+    public function store(StorePublicacaoRequest $request,PublicacaoService $publicacaoService)
     {
         $publicacaoService->create($request);
         return redirect()->route('publicacao.index')->with('success','Publicação criada com sucesso!');
@@ -66,7 +67,7 @@ class PublicacaoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id,PublicacaoService $publicacaoService)
+    public function update(StorePublicacaoRequest $request, $id,PublicacaoService $publicacaoService)
     {
         $publicacaoService->update($id,$request);
         return redirect()->back()->with('success','Publicação atualizada com sucesso!');
