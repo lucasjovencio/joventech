@@ -24,28 +24,21 @@
 						</a>
 					</li>
 					<li>
-						<a class="nav-link" data-toggle="collapse" href="#categorais">
-							<i class="tim-icons icon-shape-star"></i> Categorias <b class="caret"></b>
+						<a href="{{ route('categoria.index') }}">
+							<i class="tim-icons icon-shape-star"></i>
+							<p>Categorias</p>
 						</a>
-						<div class="collapse collapse-submenu" id="categorais">
-							<ul class="navbar-nav" >
-								<li  class="nav-item" >
-									<a class="nav-link" href="{{route('tipo-categoria.index')}}">
-										Tipos de categorias
-									</a> 
-								</li>
-								<li  class="nav-item" >
-									<a class="nav-link" href="{{route('categoria.index')}}">
-										Categorias
-									</a> 
-								</li>
-							</ul>
-						</div>
 					</li>
 					<li>
 						<a href="{{ route('publicacao.index') }}">
 							<i class="tim-icons icon-align-center"></i>
 							<p>Publicações</p>
+						</a>
+					</li>
+					<li>
+						<a href="{{ route('depoimento.index') }}">
+							<i class="tim-icons icon-align-center"></i>
+							<p>Depoimentos</p>
 						</a>
 					</li>
 				</ul>
@@ -106,7 +99,8 @@
 									<li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Profile</a></li>
 									<li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Settings</a></li>
 									<li class="dropdown-divider"></li>
-									<li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Log out</a></li>
+									<li class="nav-link"><a href="#" onclick="document.getElementById('logout-form').submit()" class="nav-item dropdown-item">Log out</a></li>
+									<form id="logout-form" action="{{ route('logout') }}" method="post">@csrf</form>
 								</ul>
 							</li>
 							<li class="separator d-lg-none"></li>

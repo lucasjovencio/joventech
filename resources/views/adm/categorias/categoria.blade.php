@@ -35,7 +35,6 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>Tipo</th>
                             <th class="text-right">Ações</th>
                         </tr>
                     </thead>
@@ -65,12 +64,6 @@
                             <label>Nome</label>
                             <input required type="text" name="nome" type="text" autofocus="true" class="form-control">
                         </div>
-
-                        <div class="form-group">
-                            <label>Tipo de categoria</label>
-                            <select class="select2 select2-ajax-tipo-categorias" data-placeholder="Tipo de categoria" name="tipo_categorias_id"></select>
-                        </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -134,8 +127,6 @@
 
 @section('js')
     <script src="{{ asset('datatable-plugins/datatables.js')}} "></script>
-    <script src="{{ asset('js/select2.min.js')}} "></script>
-    
     <script>
         
         let table;
@@ -149,12 +140,10 @@
                     type:"GET",
                     data: {
                         'nome': function(){ return $(".filternome").val(); },
-                        'tipo': function(){ return $(".filtertipo").val(); },
                     },
                 },
                 columns: [
                     {data: 'nome', name: 'nome'},
-                    {data: 'tipo', name: 'tipo'},
                     {data: 'action', name: 'action', class:"text-right"},
                 ],
                 responsive: false,
@@ -181,19 +170,6 @@
 
         $(document).ready(function() {
             fetch_data();
-            $('.select2-ajax-tipo-categorias').select2({
-                ajax: {
-                    url: "{{route('tipo.categoria.select2')}}",
-                    dataType: 'json',
-                    processResults: function (data) {
-                        // Transforms the top-level key of the response object from 'items' to 'results'
-                        return {
-                            results: data.data
-                        };
-                    },
-                    cache: true
-                }
-            });
         });
        
         function remover(e)

@@ -17,14 +17,13 @@ class CreatePublicaosTable extends Migration
             $table->id();
             $table->string('titulo');
             $table->text('resumo');
-            $table->longText('conteudo');
-            $table->string('imagem_destaque');
+            $table->longText('conteudo')->nullable();
+            $table->string('imagem_destaque')->nullable();
             $table->unsignedBigInteger('users_id')->index();
             $table->foreign('users_id')->references('id')->on('users');
-            $table->unsignedBigInteger('tipo_publicacao')->index();
-            $table->foreign('tipo_publicacao')->references('id')->on('tipo_categorias');
             $table->dateTime('publicado_em');
             $table->enum('visibilidade', ['Publico', 'Privado']);
+            $table->enum('tipo_publicacao', ['blog', 'depoimento','projeto'])->index();
             $table->timestamps();
             $table->softDeletes();
         });

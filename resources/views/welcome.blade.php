@@ -63,7 +63,6 @@
             }
         </style>
 
-        @livewireStyles
     </head>
     <body>
         <div class="flex-center position-ref full-height">
@@ -99,5 +98,4 @@
             </div>
         </div>
     </body>
-    @livewireScripts
 </html>

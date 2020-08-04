@@ -16,8 +16,9 @@ Auth::routes(['verify' => true]);
 Route::get('/','Web\HomeController@index')->name('home.index');
 
 Route::prefix('blog')->group(function(){
-    Route::get('/','Web\PublicacoesController@index')->name('home.blog');
-    Route::get('/pesquisa','Web\PublicacoesController@search')->name('home.blog.search');
-    Route::get('/categoria/{categoria}','Web\PublicacoesController@categoria')->name('home.blog.categoria');
-    Route::get('/{id?}','Web\PublicacoesController@show')->name('home.blog.show');
+    Route::get('/','Web\PublicacaoController@index')->name('home.blog');
+    Route::get('/pesquisa','Web\PublicacaoController@search')->name('home.blog.search');
+    Route::get('/categoria/{categoria}','Web\PublicacaoController@categoria')->name('home.blog.categoria');
+    Route::get('/{id?}','Web\PublicacaoController@show')->name('home.blog.show');
 });
+

@@ -32,7 +32,7 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        Categoria::create($request->only('nome','tipo_categorias_id'));
+        Categoria::create($request->only('nome'));
         return redirect()->back()->with('success','Categoria criada com sucesso!');
     }
 
@@ -59,8 +59,7 @@ class CategoriaController extends Controller
     public function update(Request $request, $id)
     {
         Categoria::id($id)->firstOrFail()->update([
-            'nome'=>$request->nome,
-            'tipo_categorias_id'=>$request->tipo_categorias_id
+            'nome'=>$request->nome
         ]);
         return redirect()->back()->with('success','Categoria atualizada sucesso!');
     }
@@ -80,11 +79,10 @@ class CategoriaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function categoriaJson($id,CategoriaService $categoriaService)
+    public function categoriaJson(CategoriaService $categoriaService)
     {
-        return response()->json($categoriaService->getCategoriaSubCategorias($id),200);
+        return response()->json($categoriaService->getCategoriaSubCategorias(),200);
     }
 }

@@ -12,13 +12,8 @@ class Categoria extends Model
     protected $table = 'categorias';
 
     protected $fillable = [
-        'nome','tipo_categorias_id','categorias_id'
+        'nome','categorias_id'
     ];
-
-    public function tipo()
-    {
-        return $this->belongsTo(TipoCategoria::class,'tipo_categorias_id');
-    }
 
     public function subCategorias()
     {

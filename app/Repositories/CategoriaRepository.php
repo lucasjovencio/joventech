@@ -13,7 +13,7 @@ class CategoriaRepository
 
     public function allArrayCategorias() : array
     {
-        return $this->model->whereDoesntHaveParent()->with('tipo')->get()->toArray();
+        return $this->model->whereDoesntHaveParent()->get()->toArray();
     }
 
     public function allArrayParents($id) : array

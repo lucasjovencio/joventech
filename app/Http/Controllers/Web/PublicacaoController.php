@@ -7,7 +7,7 @@ use App\Services\Publicacao\PublicacaoService;
 use Illuminate\Http\Request;
 use App\Traits\RedisTrait;
 
-class PublicacoesController extends Controller
+class PublicacaoController extends Controller
 {
     use RedisTrait;
 

@@ -36,6 +36,12 @@ class PublicacaoService
             $publicacoes = $this->setRedis('publicacoes',$this->repo->allArrayPublicacoes());
 
         return DataTables::of($publicacoes)
+            ->addIndexColumn()
+            ->filter(function ($instance) {
+                $instance->collection = $instance->collection->filter(function ($row) {
+                    return Str::contains(strtolower($row['tipo_publicacao']),strtolower("blog")) ? true : false;
+                });
+            })
             ->addColumn('titulo', function($row){
                 return $row->titulo ?? '';
             })
@@ -43,7 +49,7 @@ class PublicacaoService
                 return  $row->visibilidade;
             })
             ->addColumn('postadoem', function($row){
-                return  Carbon::parse($row->publicado_em)->format('d/m/Y h:i:s');
+                return  Carbon::parse($row->publicado_em)->format('d/m/Y H:i');
             })
             ->addColumn('autor', function($row){
                 return  $row->autor->name ?? '';
@@ -64,8 +70,8 @@ class PublicacaoService
             'conteudo'          => $request->conteudo           ?? '',
             'imagem_destaque'   => $request->imagem_destaque    ?? '',
             'users_id'          => Auth::id(),
-            'tipo_publicacao'   => $request->tipo_publicacao,
-            'publicado_em'      => ($request->publicado_em)     ? Carbon::createFromFormat('d/m/Y h:i',$request->publicado_em)->format('Y-m-d H:i:s') : now()->format('Y-m-d h:i:s'),
+            'tipo_publicacao'   => "blog",
+            'publicado_em'      => ($request->publicado_em)     ? Carbon::createFromFormat('d/m/Y H:i',$request->publicado_em)->format('Y-m-d H:i:s') : now()->format('Y-m-d h:i:s'),
             'visibilidade'      => ($request->visibilidade)     ? 'Publico' : 'Privado',
         ]);
         $this->publicacaoCategoriaService->vinculaPublicacaoCategoria($publicacao->id,$request->categorias);
@@ -80,7 +86,7 @@ class PublicacaoService
             'conteudo'          => $request->conteudo           ?? '',
             'imagem_destaque'   => $request->imagem_destaque    ?? '',
             'tipo_publicacao'   => $request->tipo_publicacao,
-            'publicado_em'      => Carbon::createFromFormat('d/m/Y h:i',$request->publicado_em)->format('Y-m-d H:i:s'),
+            'publicado_em'      => Carbon::createFromFormat('d/m/Y H:i',$request->publicado_em)->format('Y-m-d H:i:s'),
             'visibilidade'      => ($request->visibilidade)     ? 'Publico' : 'Privado',
         ]);
         $this->setRedis('publicacoes',$this->repo->allArrayPublicacoes());
@@ -98,7 +104,7 @@ class PublicacaoService
     public function getBlogPostsCategoria($categoria,$skip=0,$take=2)
     {
         return \json_decode($this->getCollectRedis('publicacoes')
-            ->where('tipo.nome',"Blog")
+            ->where('tipo_publicacao',"blog")
             ->where('visibilidade','Publico')
             ->map(function ($collection, $key) {
                 return collect($collection)->put('categorias',$this->getCollectRedis("publicacao{$collection->id}-categorias"));
@@ -119,7 +125,7 @@ class PublicacaoService
     public function getSearchBlogPosts($search)
     {
         return \json_decode($this->getCollectRedis('publicacoes')
-                ->where('tipo.nome',"Blog")
+                ->where('tipo_publicacao',"blog")
                 ->where('visibilidade','Publico')
                 ->filter(function($item) use ($search) {
                     if(Str::contains(strtolower($item->titulo),strtolower($search)))
@@ -139,7 +145,7 @@ class PublicacaoService
 
     public function getBlogLast3()
     {
-        return \json_decode($this->getCollectRedis('publicacoes')->where('tipo.nome',"Blog")->where('visibilidade','Publico')->map(function ($collection, $key) {
+        return \json_decode($this->getCollectRedis('publicacoes')->where('tipo_publicacao',"blog")->where('visibilidade','Publico')->map(function ($collection, $key) {
             return collect($collection)->put('categorias',$this->getCollectRedis("publicacao{$collection->id}-categorias"));
         })->sortByDesc('publicado_em')->take(3));
     }

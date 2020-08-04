@@ -30,14 +30,6 @@
                                     <input required type="text" name="nome" type="text" autofocus="true" class="form-control" value="{{$categoria->nome}}">
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Tipo de categoria</label>
-                                    <select class="select2 select2-ajax-tipo-categorias" data-placeholder="Tipo de categoria" name="tipo_categorias_id">
-                                        <option value="{{$categoria->tipo->id}}" selected="selected">{{$categoria->tipo->nome}}</option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <button type="submit" class="ml-3 btn btn-primary">Alterar</button>
 
@@ -152,7 +144,6 @@
 
 @section('js')
     <script src="{{ asset('datatable-plugins/datatables.js')}} "></script>
-    <script src="{{ asset('js/select2.min.js')}} "></script>
     
     <script>
         
@@ -195,27 +186,8 @@
             }
         });
 
-        function setTipo()
-        {
-            setTimeout(function(){ $("select2-ajax-tipo-categorias").val("{{$categoria->tipo->id}}") }, 1000);
-        }
-
         $(document).ready(function() {
             fetch_data();
-            $('.select2-ajax-tipo-categorias').select2({
-                ajax: {
-                    url: "{{route('tipo.categoria.select2')}}",
-                    dataType: 'json',
-                    processResults: function (data) {
-                        // Transforms the top-level key of the response object from 'items' to 'results'
-                        setTipo();
-                        return {
-                            results: data.data
-                        };
-                    },
-                    cache: true
-                }
-            });
         });
 
         

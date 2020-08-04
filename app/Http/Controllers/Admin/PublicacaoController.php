@@ -40,9 +40,10 @@ class PublicacaoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\StorePublicacaoRequest  $request
      * @return \Illuminate\Http\Response
      */
+    //StorePublicacaoRequest
     public function store(StorePublicacaoRequest $request,PublicacaoService $publicacaoService)
     {
         $publicacaoService->create($request);
@@ -55,7 +56,7 @@ class PublicacaoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id,PublicacaoService $publicacaoService)
+    public function show($id)
     {
         return view('adm.publicacoes.show',['publicacao'=>$this->findRedis('publicacoes',$id)]);
     }

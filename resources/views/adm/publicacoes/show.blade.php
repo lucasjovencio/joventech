@@ -88,27 +88,25 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                        <form>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group form-validation">
-                                        <label for="resumo">Resumo</label>
-                                        <textarea data-rule="minlen:1" data-msg="Informe o resumo" id="resumo" name="resumo" class="form-control my-editor">{!! old('resumo',$publicacao->resumo ?? '') !!}</textarea>
-                                        <div class="validation"></div>
-                                    </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-validation">
+                                    <label for="resumo">Resumo</label>
+                                    <textarea data-rule="minlen:1" data-msg="Informe o resumo" id="resumo" name="resumo" class="form-control my-editor">{!! old('resumo',$publicacao->resumo ?? '') !!}</textarea>
+                                    <div class="validation"></div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group form-validation">
-                                        <label for="conteudo">Conteudo</label>
-                                        <textarea data-rule="minlen:1" data-msg="Informe o conteudo" id="conteudo" name="conteudo" class="form-control my-editor">{!! old('resumo',$publicacao->conteudo ?? '') !!}</textarea>
-                                        <div class="validation"></div>
-                                    </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group form-validation">
+                                    <label for="conteudo">Conteudo</label>
+                                    <textarea data-rule="minlen:1" data-msg="Informe o conteudo" id="conteudo" name="conteudo" class="form-control my-editor">{!! old('resumo',$publicacao->conteudo ?? '') !!}</textarea>
+                                    <div class="validation"></div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-fill btn-primary">Publicar</button>

@@ -97,11 +97,7 @@
                     </div>
                     <a class="btn btn-primary" id="loadMore" role="button">Carregar mais</a>
                 </div>
-                <div class="col-md-4">
-                    <x-web.blog.pesquisa/>
-                    <x-web.blog.categoria/>
-                    <x-web.blog.tag/>
-                </div>
+                <x-web.blog.right-sidebar/>
             </div>
         </div>
     </section>

@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Services\Publicacao\PublicacaoService;
-use Illuminate\Http\Request;
+use App\Services\Publicacao\DepoimentoService;
 
 class HomeController extends Controller
 {
-    public function index(PublicacaoService $publicacaoService)
+    public function index(PublicacaoService $publicacaoService,DepoimentoService $depoimentoService)
     {
-        // dd(\json_decode($publicacaoService->getBlogLast3()));
         return view('web.home.index',[
-            'blogs' => $publicacaoService->getBlogLast3()
+            'blogs' => $publicacaoService->getBlogLast3(),
+            'depoimentos' => $depoimentoService->getDepoimentos(),
         ]);
     }
 }

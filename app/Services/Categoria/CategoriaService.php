@@ -38,9 +38,6 @@ class CategoriaService
                 ->addColumn('nome', function($row){
                     return $row->nome ?? '';
                 })
-                ->addColumn('tipo', function($row){
-                    return $row->tipo->nome ?? '';
-                })
                 ->addColumn('action', function($row){
                     $btn = '<a href="'.route('categoria.show',['categorium'=>$row->id]).'" class="edit btn btn-primary btn-sm">Acessar</a>';
                     $btn .= ' <a href="#" data-toggle="modal" id="" data-target="#remover" data-nome="'.($row->nome ?? '').'" data-id="'.$row->id.'" data-src="'.route('categoria.destroy',['categorium'=>$row->id]).'" onClick="remover(this)" class=" btn btn-danger btn-sm">Excluir</a>';
@@ -50,16 +47,16 @@ class CategoriaService
                 ->make(true);
     }
 
-    public function getCategoriaSubCategorias($id)
+    public function getCategoriaSubCategorias()
     {
-        return $this->getCollectRedis('categorias')->where('tipo.id',$id)->map(function ($collection, $key) {
+        return $this->getCollectRedis('categorias')->map(function ($collection, $key) {
             return collect($collection)->put('subcategoria',$this->getCollectRedis("subcategorias{$collection->id}"));
         });
     }
 
     public function getBlogCategoriasSubCategoria()
     {
-        return \json_decode($this->getCollectRedis('categorias')->where('tipo.nome','Blog')->map(function ($collection, $key) {
+        return \json_decode($this->getCollectRedis('categorias')->map(function ($collection, $key) {
             return collect($collection)->put('subcategoria',$this->getCollectRedis("subcategorias{$collection->id}"));
         }));
     }

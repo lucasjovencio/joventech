@@ -13,7 +13,6 @@ class PublicacaoRepository
 
     public function allArrayPublicacoes() : array
     {
-        return $this->model->with('autor','tipo')->get()->toArray();
+        return $this->model->with('autor')->get()->toArray();
     }
-
 }

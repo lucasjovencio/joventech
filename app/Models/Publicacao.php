@@ -49,11 +49,6 @@ class Publicacao extends Model
         return $this->hasOne(User::class,'id','users_id')->select('id','name');
     }
 
-    public function tipo()
-    {
-        return $this->hasOne(TipoCategoria::class,'id','tipo_publicacao')->select('id','nome');
-    }
-
     public function categorias()
     {
         return $this->hasMany(PublicacaoCategoria::class,'publicacoes_id','id')->select('id','publicacoes_id','categorias_id');
