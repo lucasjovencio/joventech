@@ -96,7 +96,7 @@ class PublicacaoService
 
     public function getBlogPosts($skip=0,$take=2)
     {
-        return \json_decode($this->getCollectRedis('publicacoes')->where('tipo.nome',"Blog")->where('visibilidade','Publico')->map(function ($collection, $key) {
+        return \json_decode($this->getCollectRedis('publicacoes')->where('tipo_publicacao',"blog")->where('visibilidade','Publico')->map(function ($collection, $key) {
             return collect($collection)->put('categorias',$this->getCollectRedis("publicacao{$collection->id}-categorias"));
         })->sortByDesc('publicado_em')->skip($skip)->take($take));
     }

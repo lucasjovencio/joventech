@@ -66,15 +66,6 @@
                             <div class="validation"></div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="form-group form-validation">
-                            <label>Tipo de publicação</label>
-                            <select data-rule="tipo-dinamico" data-msg="Informe o tipo de publicação"  class="select2 select2-ajax-tipo-categorias" data-placeholder="Tipo de publicação" name="tipo_publicacao">
-                                <option selected value="{{ $publicacao->tipo_publicacao }}">{{ $publicacao->tipo->nome }}</option>
-                            </select>
-                        </div>
-                        <div id="validationtipo" class="validation"></div>
-                    </div>
 
                     <div class="col-md-12">
                         <div class="form-group">
@@ -86,7 +77,7 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="card">
+                <div class="card"> 
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">

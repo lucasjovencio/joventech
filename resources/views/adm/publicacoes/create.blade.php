@@ -49,7 +49,7 @@
                         <div class="form-group form-validation">
                             <label>Data da publicação</label>
                             <input data-rule="required" data-msg="Informe data de publicação" type="text" class="form-control"
-                                value="" placeholder="d/m/Y H:m"  name="publicado_em" id="publicado_em">
+                                value="{{ old('publicado_em') }}" placeholder="d/m/Y H:m"  name="publicado_em" id="publicado_em">
                             <div class="validation"></div>
                         </div>
                     </div>

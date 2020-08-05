@@ -31,3 +31,4 @@ Route::prefix('publicacoes')->group(function(){
 });
 
 Route::resource('depoimento','DepoimentoController');
+Route::resource('projeto','ProjetoController');

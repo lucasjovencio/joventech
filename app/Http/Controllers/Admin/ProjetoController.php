@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Services\Publicacao\DepoimentoService;
-use App\Http\Requests\StoreDepoimentoRequest;
+use App\Http\Requests\StoreProjetoRequest;
 use App\Models\Publicacao;
+use App\Services\Publicacao\ProjetoService;
 use App\Traits\RedisTrait;
+use Illuminate\Http\Request;
 
-class DepoimentoController extends Controller
+class ProjetoController extends Controller
 {
     use RedisTrait;
     /**
@@ -17,12 +17,12 @@ class DepoimentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,DepoimentoService $depoimentoService)
+    public function index(Request $request,ProjetoService $projetoService)
     {
         if($request->ajax()){
-            return $depoimentoService->getAllDepoimentosDataTable($request);
+            return $projetoService->getAllProjetosDataTable($request);
         }
-        return view('adm.depoimentos.index');
+        return view('adm.projetos.index');
     }
 
     /**
@@ -32,7 +32,7 @@ class DepoimentoController extends Controller
      */
     public function create()
     {
-        return view('adm.depoimentos.create');
+        return view('adm.projetos.create');
     }
 
     /**
@@ -41,10 +41,10 @@ class DepoimentoController extends Controller
      * @param  \Illuminate\Http\StoreDepoimentoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDepoimentoRequest $request,DepoimentoService $depoimentoService)
+    public function store(StoreProjetoRequest $request,ProjetoService $projetoService)
     {
-        $depoimentoService->create($request);
-        return redirect()->route('depoimento.index')->with('success','Depoimento criado com sucesso!');
+        $projetoService->create($request);
+        return redirect()->route('projeto.index')->with('success','Projeto criado com sucesso!');
     }
 
     /**
@@ -55,7 +55,7 @@ class DepoimentoController extends Controller
      */
     public function show($id)
     {
-        return view('adm.depoimentos.show',['depoimento'=>$this->findRedis('publicacoes',$id)]);
+        return view('adm.projetos.show',['projeto'=>$this->findRedis('publicacoes',$id)]);
     }
 
     /**
@@ -65,10 +65,10 @@ class DepoimentoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreDepoimentoRequest $request, $id,DepoimentoService $depoimentoService)
+    public function update(StoreProjetoRequest $request, $id,ProjetoService $projetoService)
     {
-        $depoimentoService->update($id,$request);
-        return redirect()->back()->with('success','Depoimento atualizado com sucesso!');
+        $projetoService->update($id,$request);
+        return redirect()->back()->with('success','Projeto atualizado com sucesso!');
     }
 
     /**
@@ -80,6 +80,6 @@ class DepoimentoController extends Controller
     public function destroy($id)
     {
         Publicacao::id($id)->firstOrFail()->delete();
-        return redirect()->back()->with('success','Depoimento removido com sucesso!');
+        return redirect()->route('projeto.index')->with('success','Projeto removido com sucesso!');
     }
 }

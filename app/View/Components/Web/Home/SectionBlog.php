@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Web\Home;
 
+use App\Services\Publicacao\PublicacaoService;
 use Illuminate\View\Component;
 
 class SectionBlog extends Component
@@ -13,9 +14,9 @@ class SectionBlog extends Component
      * @param  array  $posts
      * @return void
      */
-    public function __construct($posts)
+    public function __construct(PublicacaoService $publicacaoService)
     {
-        $this->posts=$posts;
+        $this->posts=$publicacaoService->getBlogLast3();
     }
 
     /**

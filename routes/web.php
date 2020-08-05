@@ -22,3 +22,8 @@ Route::prefix('blog')->group(function(){
     Route::get('/{id?}','Web\PublicacaoController@show')->name('home.blog.show');
 });
 
+Route::prefix('projetos')->group(function(){
+    Route::get('/','Web\ProjetoController@index')->name('home.projeto');
+    Route::get('/{id?}','Web\ProjetoController@show')->name('home.projeto.show');
+});
+

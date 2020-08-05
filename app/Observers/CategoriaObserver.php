@@ -47,7 +47,7 @@ class CategoriaObserver
      */
     public function deleted(Categoria $categoria)
     {
-        $this->setRedisObserve($categoria);
+        $this->setRedisObserveRemove($categoria);
     }
 
     /**
@@ -59,6 +59,9 @@ class CategoriaObserver
     public function restored(Categoria $categoria)
     {
         $this->setRedisObserve($categoria);
+        if(!$categoria->isParent()){
+            $this->setRedis("subcategorias{$categoria->id}",$this->repo->allArrayParents($categoria->categorias_id));
+        }
     }
 
     /**
@@ -69,7 +72,7 @@ class CategoriaObserver
      */
     public function forceDeleted(Categoria $categoria)
     {
-        $this->setRedisObserve($categoria);
+        $this->setRedisObserveRemove($categoria);
     }
 
 
@@ -78,6 +81,16 @@ class CategoriaObserver
         if($categoria->isParent()){
             $this->setRedis("subcategorias{$categoria->categorias_id}",$this->repo->allArrayParents($categoria->categorias_id));
         }else{
+            $this->setRedis('categorias',$this->repo->allArrayCategorias());
+        }
+    }
+
+    private function setRedisObserveRemove(Categoria $categoria)
+    {
+        if($categoria->isParent()){
+            $this->setRedis("subcategorias{$categoria->categorias_id}",[]);
+        }else{
+            $this->setRedis("subcategorias{$categoria->id}",[]);
             $this->setRedis('categorias',$this->repo->allArrayCategorias());
         }
     }

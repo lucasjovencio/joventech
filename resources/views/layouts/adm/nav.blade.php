@@ -17,28 +17,34 @@
 					</a>
 				</div>
 				<ul class="nav">
-					<li class="active ">
+					<li class="">
 						<a href="./dashboard.html">
 							<i class="tim-icons icon-chart-pie-36"></i>
 							<p>Dashboard</p>
 						</a>
 					</li>
-					<li>
-						<a href="{{ route('categoria.index') }}">
+					<li class="@if(Route::is('categoria.*')) active @endif">
+						<a  href="{{ route('categoria.index') }}">
 							<i class="tim-icons icon-shape-star"></i>
 							<p>Categorias</p>
 						</a>
 					</li>
-					<li>
+					<li class="@if(Route::is('publicacao.*')) active @endif">
 						<a href="{{ route('publicacao.index') }}">
 							<i class="tim-icons icon-align-center"></i>
 							<p>Publicações</p>
 						</a>
 					</li>
-					<li>
+					<li class="@if(Route::is('depoimento.*')) active @endif">
 						<a href="{{ route('depoimento.index') }}">
 							<i class="tim-icons icon-align-center"></i>
 							<p>Depoimentos</p>
+						</a>
+					</li>
+					<li class="@if(Route::is('projeto.*')) active @endif">
+						<a href="{{ route('projeto.index') }}">
+							<i class="tim-icons icon-align-center"></i>
+							<p>Projetos</p>
 						</a>
 					</li>
 				</ul>

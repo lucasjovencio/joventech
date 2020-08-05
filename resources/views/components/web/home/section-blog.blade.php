@@ -49,7 +49,7 @@
                 @endforeach
             </div>
             <div class="row justify-content-md-center">
-                <p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="#contact" role="button">Mais publicações</a></p>
+                <p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="{{ route('home.blog') }}" role="button">Mais publicações</a></p>
             </div>
         </div>
     </section>

@@ -5,7 +5,7 @@
 use App\Models\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Hash;
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -22,7 +22,7 @@ $factory->define(User::class, function (Faker $faker) {
         'name' => $faker->name,
         'email' => "admin@admin.com",
         'email_verified_at' => now(),
-        'password' => '$10$1NUI5fTcRW3fLvQN3nBcPeZ51yU0IdTYZbYHgjKVBTFxE.8p.zzxO', // 123123
+        'password' => Hash::make('123123'), // 123123
         'remember_token' => Str::random(10),
     ];
 });

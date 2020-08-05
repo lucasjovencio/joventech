@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\RedisTrait;
 use App\Models\Categoria;
-
+use App\Traits\JsonResponseTrait;
 class CategoriaController extends Controller
 {
-    use RedisTrait;
+    use RedisTrait,JsonResponseTrait;
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +42,7 @@ class CategoriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show($id)
     {
         return view('adm.categorias.show-categoria',[
             'categoria' => $this->findRedis('categorias',$id)
@@ -83,6 +83,6 @@ class CategoriaController extends Controller
      */
     public function categoriaJson(CategoriaService $categoriaService)
     {
-        return response()->json($categoriaService->getCategoriaSubCategorias(),200);
+        return $this->jsonResponseSuccess($categoriaService->getCategoriaSubCategorias(),200);
     }
 }

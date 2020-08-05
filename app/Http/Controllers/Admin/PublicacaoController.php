@@ -9,10 +9,11 @@ use App\Services\Categoria\PublicacaoCategoriaService;
 use App\Services\Publicacao\PublicacaoService;
 use App\Traits\RedisTrait;
 use App\Http\Requests\StorePublicacaoRequest;
+use App\Traits\JsonResponseTrait;
 
 class PublicacaoController extends Controller
 {
-    use RedisTrait;
+    use RedisTrait,JsonResponseTrait;
 
     /**
      * Display a listing of the resource.
@@ -94,6 +95,6 @@ class PublicacaoController extends Controller
      */
     public function categoriaJson($id,PublicacaoCategoriaService $publicacaoCategoriaService)
     {
-        return response()->json($publicacaoCategoriaService->getRedisPublicacaoCategorias($id),200);
+        return $this->jsonResponseSuccess($publicacaoCategoriaService->getRedisPublicacaoCategorias($id),200);
     }
 }
