@@ -234,5 +234,9 @@ return [
 
     'disqus' => [
         'host' => ENV('DISQUS_HOST','')
-    ]
+    ],
+
+    'hubspot' => [
+        'script' => ENV('HUBSPOT_SCRIPT','')
+    ],
 ];
