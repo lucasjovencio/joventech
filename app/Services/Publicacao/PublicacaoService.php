@@ -152,6 +152,13 @@ class PublicacaoService
         })->sortByDesc('publicado_em')->take(3));
     }
 
+    public function getAllPosts()
+    {
+        return \json_decode($this->getCollectRedis('publicacoes')->where('tipo_publicacao',"blog")->where('visibilidade','Publico')->map(function ($collection, $key) {
+            return collect($collection)->put('categorias',$this->getCollectRedis("publicacao{$collection->id}-categorias"));
+        })->sortByDesc('publicado_em'));
+    }
+
     public function getPost($id){
         return \json_decode($this->getCollectRedis('publicacoes')->where('id',$id)->where('visibilidade','Publico')->map(function ($collection, $key) {
             return collect($collection)->put('categorias',$this->getCollectRedis("publicacao{$collection->id}-categorias"));

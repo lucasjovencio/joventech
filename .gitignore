@@ -31,3 +31,4 @@ yarn-error.log
 /laradock/!/.devcontainer/docker-compose.extend-example.yml
 
 /laradock/docker-compose.custom.yml
+public/sitemap.xml
