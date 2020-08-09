@@ -35,8 +35,8 @@
                             </div>
                             <div class="card-footer">
                                 <div class="post-author">
-                                    <a href="#">
-                                        <img src="img/testimonial-2.jpg" alt="" class="avatar rounded-circle">
+                                    <a href="#blog">
+                                        {{-- <img src="img/testimonial-2.jpg" alt="" class="avatar rounded-circle"> --}}
                                         <span class="author">{{ $post->autor->name }}</span>
                                     </a>
                                 </div>

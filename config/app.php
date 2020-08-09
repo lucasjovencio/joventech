@@ -233,11 +233,16 @@ return [
         'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
     ],
 
-    'disqus' => [
+    'disqus'    => [
         'host' => ENV('DISQUS_HOST','')
     ],
 
-    'hubspot' => [
+    'hubspot'   => [
         'script' => ENV('HUBSPOT_SCRIPT','')
     ],
+
+    'google'    => [
+        'analytics_id'  => ENV('GOOGLE_ANALYTICS_ID',''),
+        'gtm'           => ENV('GOOGLE_GTM',''),
+    ]
 ];
