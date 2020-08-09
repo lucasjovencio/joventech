@@ -14,7 +14,7 @@ class PublicacaoCategoria extends Model
     ];
 
     protected $appends = [
-        'nome_categoria'
+        'nome_categoria','slug'
     ];
 
     public function getNomeCategoriaAttribute()
@@ -22,9 +22,14 @@ class PublicacaoCategoria extends Model
         return $this->categoria->nome;
     }
 
+    public function getSlugAttribute()
+    {
+        return $this->categoria->slug ?? $this->categoria->nome ?? '';
+    }
+
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class,'categorias_id','id')->select('id','nome');
+        return $this->belongsTo(Categoria::class,'categorias_id','id')->select('id','nome','slug');
     }
 
     public function scopeIdPublicacao($query,$id)
