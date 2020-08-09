@@ -14,19 +14,19 @@
                     <a class="nav-link js-scroll active" href="{{ (Route::is('home.index')) ? '#page-top' : route('home.index')  }}">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll" href="#about">Sobre</a>
+                    <a class="nav-link js-scroll" href="{{ (Route::is('home.index')) ? '#about' : route('home.index')."#about"  }}">Sobre</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll" href="#service">Qualificações</a>
+                    <a class="nav-link js-scroll" href="{{ (Route::is('home.index')) ? '#service' : route('home.index')."#service"  }}">Qualificações</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll" href="#work">Work</a>
+                    <a class="nav-link js-scroll" href="{{ (Route::is('home.index')) ? '#work' : route('home.index')."#work"  }}">Depoimentos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll" href="{{ (Route::is('home.index')) ? '#blog' : route('home.blog')  }}">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll" href="#contact">Orçamento</a>
+                    <a class="nav-link js-scroll" href="#contact">Contato</a>
                 </li>
             </ul>
         </div>
