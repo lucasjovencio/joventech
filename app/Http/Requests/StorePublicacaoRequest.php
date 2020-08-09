@@ -31,6 +31,7 @@ class StorePublicacaoRequest extends FormRequest
             'categorias'        => 'required|array|exists:categorias,id',
             'resumo'            => 'required|max:255',
             'conteudo'          => 'required',
+            'slug'              => 'required|max:255|regex:/(^([a-z0-9-\-]+)?$)/u|unique:publicacoes,slug,'.request()->route('publicacao')
         ];
     }
 
@@ -56,6 +57,10 @@ class StorePublicacaoRequest extends FormRequest
             'resumo.required'               => 'O resumo é obrigatório.',
             'resumo.max'                    => 'O resumo excedeu 255 caracteres.',
             'conteudo.required'             => 'O conteudo obrigatório.',
+            'slug.required'                 => 'O slug é obrigatório.',
+            'slug.unique'                   => 'O slug já está sendo utilizado.',
+            'slug.regex'                    => 'O slug não é válido.',
+            'slug.max'                      => 'O slug excedeu 255 caracteres.',
         ];
     }
 }

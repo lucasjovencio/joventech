@@ -31,6 +31,7 @@ class StoreProjetoRequest extends FormRequest
             'resumo'            => 'required|max:255',
             'conteudo'          => 'required',
             'link_externo'      => 'required|url',
+            'slug'              => 'required|max:255|regex:/(^([a-z0-9-\-]+)?$)/u|unique:publicacoes,slug,'.request()->route('publicacao')
         ];
     }
 
@@ -54,7 +55,11 @@ class StoreProjetoRequest extends FormRequest
             'resumo.max'                    => 'O resumo excedeu 255 caracteres.',
             'conteudo.required'             => 'O conteudo obrigatório.',
             'link_externo.required'         => 'O link é obrigatório',
-            'link_externo.url'              => 'O link não é válido'
+            'link_externo.url'              => 'O link não é válido',
+            'slug.required'                 => 'O slug é obrigatório.',
+            'slug.unique'                   => 'O slug já está sendo utilizado.',
+            'slug.regex'                    => 'O slug não é válido.',
+            'slug.max'                      => 'O slug excedeu 255 caracteres.',
         ];
     }
 }
