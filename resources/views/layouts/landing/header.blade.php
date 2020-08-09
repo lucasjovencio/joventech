@@ -4,8 +4,8 @@
 	<meta charset="utf-8">
 	<title>{{ config('app.name', 'JovenTech') }} Tecnologia</title>
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<meta content="" name="keywords">
-	<meta content="" name="description">
+
+	{!! SEO::generate() !!}
 
 	<!-- Favicons -->
 	<link rel="apple-touch-icon" sizes="57x57" href="{{asset('favicon/apple-icon-57x57.png')}}">

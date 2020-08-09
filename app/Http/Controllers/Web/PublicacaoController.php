@@ -7,6 +7,8 @@ use App\Services\Publicacao\PublicacaoService;
 use App\Traits\JsonResponseTrait;
 use Illuminate\Http\Request;
 use App\Traits\RedisTrait;
+use Artesaos\SEOTools\Facades\SEOTools;
+use Artesaos\SEOTools\Facades\SEOMeta;
 
 class PublicacaoController extends Controller
 {
@@ -35,9 +37,19 @@ class PublicacaoController extends Controller
 
     public function show($id,PublicacaoService $publicacaoService)
     {
+        $post = $publicacaoService->getPost($id);
+        SEOTools::setTitle($post->titulo);
+        SEOTools::setDescription($post->resumo);
+        SEOTools::opengraph()->setUrl(route('home.blog.show',['id'=>$post->id,'slug'=>$post->slug]));
+        SEOTools::setCanonical(route('home.blog.show',['id'=>$post->id,'slug'=>$post->slug]));
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        foreach ($post->categorias as $categoria) {
+            SEOMeta::addMeta('article:section', $categoria->nome_categoria, 'property');
+        }
+        // SEOMeta::addKeyword(['key1', 'key2', 'key3']); //TAGS
+        SEOTools::jsonLd()->addImage($post->imagem_destaque);
         return view('web.publicacoes.show',[
-            'post' => $publicacaoService->getPost($id),
-            'recentes' => $publicacaoService->getBlogLast3()
+            'post' => $post
         ]);
     }
 
