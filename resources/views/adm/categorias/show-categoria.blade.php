@@ -27,7 +27,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Nome</label>
-                                    <input required type="text" name="nome" type="text" autofocus="true" class="form-control" value="{{$categoria->nome}}">
+                                    <input required type="text" name="nome" type="text" autofocus="true" class="form-control" value="{{$categoria->nome ?? ''}}">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Slug</label>
+                                    <input required type="text" name="slug" id="slug" type="text" class="slug form-control" value="{{$categoria->slug ?? ''}}">
                                 </div>
                             </div>
                         </div>
@@ -80,6 +86,10 @@
                             <label>Nome</label>
                             <input required type="text" name="nome" type="text" autofocus="true" class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label>Slug</label>
+                            <input required type="text" name="slug" id="slug" type="text" class="slug form-control">
+                        </div>
                     </div>
                     <input type="hidden" value="{{$categoria->id}}" name="categorias_id">
                     <div class="modal-footer">
@@ -131,6 +141,10 @@
                             <label>Nome</label>
                             <input required type="text" name="nome" id="nome-cat-input" type="text" autofocus="true" class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label>Slug</label>
+                            <input required type="text" name="slug" id="slug-cat-input" id="slug" type="text" class="slug form-control">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -146,7 +160,10 @@
     <script src="{{ asset('datatable-plugins/datatables.js')}} "></script>
     
     <script>
-        
+        $('.slug').on('input', function (event) { 
+            this.value = (this.value.replace(/[^a-z0-9-/ /]/g, '')).replace(/ /g,"-");
+        });
+
         let table;
         let searchAjax = true;
         function fetch_data(){
@@ -201,6 +218,7 @@
         {
             $(".nome-cat").html($(e).data('nome'))
             $("#nome-cat-input").val($(e).data('nome'))
+            $("#slug-cat-input").val($(e).data('slug'))
             $("#updateAction").attr('action',$(e).data('src'))
         }
         

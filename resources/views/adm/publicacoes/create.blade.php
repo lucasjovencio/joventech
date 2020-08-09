@@ -34,6 +34,14 @@
                         </div>
                     </div>
                     <div class="col-md-12">
+                        <div class="form-group form-validation">
+                            <label>Slug</label>
+                            <input data-rule="required" data-msg="Informe o slug da publicação" name="slug" id="slug" type="text" class="form-control" 
+                                placeholder="Slug" value="{{old('slug')}}">
+                            <div class="validation"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
                         <label>Imagem de capa</label>
                         <div class="input-group form-validation">
                             <span class="">
@@ -119,6 +127,11 @@
                 value:{{ old('publicado_em') ?? "new Date()" }},
                 lang:'pt-BR'
             }); 
+            $("#slug").val((($("#slug").val().toLowerCase().replace(/[^a-z0-9-/ /]/g, '')).replace(/ /g,"-")))
+        });
+
+        $('#slug').on('input', function (event) { 
+            this.value = (this.value.replace(/[^a-z0-9-/ /]/g, '')).replace(/ /g,"-");
         });
     </script>
     <script>

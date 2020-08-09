@@ -17,6 +17,9 @@
 
   <!-- Template Main Javascript File -->
   <script src="{{ asset('dev-folio/js/main.js') }}"></script>
+  <!-- Start of HubSpot Embed Code -->
+    <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/{{config('app.hubspot.script')}}.js"></script>
+  <!-- End of HubSpot Embed Code -->
   @yield('js')
 </body>
 </html>

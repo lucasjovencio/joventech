@@ -19,11 +19,11 @@ Route::prefix('blog')->group(function(){
     Route::get('/','Web\PublicacaoController@index')->name('home.blog');
     Route::get('/pesquisa','Web\PublicacaoController@search')->name('home.blog.search');
     Route::get('/categoria/{categoria}','Web\PublicacaoController@categoria')->name('home.blog.categoria');
-    Route::get('/{id?}','Web\PublicacaoController@show')->name('home.blog.show');
+    Route::get('/{id?}/{slug?}','Web\PublicacaoController@show')->name('home.blog.show');
 });
 
 Route::prefix('projetos')->group(function(){
     Route::get('/','Web\ProjetoController@index')->name('home.projeto');
-    Route::get('/{id?}','Web\ProjetoController@show')->name('home.projeto.show');
+    Route::get('/{id?}/{slug?}','Web\ProjetoController@show')->name('home.projeto.show');
 });
 

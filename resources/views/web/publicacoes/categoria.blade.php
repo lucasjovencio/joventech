@@ -76,12 +76,12 @@
                         @foreach($posts as $post)
                             <div class="post-box">
                                 <div class="post-thumb">
-                                    <a href="{{ route('home.blog.show',['id'=>$post->id]) }}">
+                                    <a href="{{ route('home.blog.show',['id'=>$post->id,'slug'=>$post->slug]) }}">
                                         <img src="{{ $post->imagem_destaque }}" class="img-fluid" alt="">
                                     </a>
                                 </div>
                                 <div class="post-meta">
-                                    <a href="{{ route('home.blog.show',['id'=>$post->id]) }}">
+                                    <a href="{{ route('home.blog.show',['id'=>$post->id,'slug'=>$post->slug]) }}">
                                         <h1 class="article-title">{{ $post->titulo }}</h1>
                                     </a>
                                     <ul>

@@ -64,6 +64,10 @@
                             <label>Nome</label>
                             <input required type="text" name="nome" type="text" autofocus="true" class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label>Slug</label>
+                            <input required type="text" name="slug" id="slug" type="text" class="form-control">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -97,38 +101,16 @@
         </div>
     </div>
 
-    <div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="update" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="update">Atualizar <span class="nome-categoria"></span></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form method="POST" id="updateAction" action="" >
-                    @method('PUT')
-                    @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Nome</label>
-                            <input required type="text" name="nome" id="nome-categoria-input" type="text" autofocus="true" class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-danger">Atualizar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('js')
     <script src="{{ asset('datatable-plugins/datatables.js')}} "></script>
     <script>
-        
+
+        $('#slug').on('input', function (event) { 
+            this.value = (this.value.replace(/[^a-z0-9-/ /]/g, '')).replace(/ /g,"-");
+        });
+
         let table;
         let searchAjax = true;
         function fetch_data(){

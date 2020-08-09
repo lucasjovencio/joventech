@@ -36,6 +36,14 @@
                         </div>
                     </div>
                     <div class="col-md-12">
+                        <div class="form-group form-validation">
+                            <label>Slug</label>
+                            <input data-rule="required" data-msg="Informe o slug da publicação" name="slug" id="slug" type="text" class="form-control" 
+                                placeholder="Slug" value="{{ $publicacao->slug ?? $publicacao->titulo ?? '' }}">
+                            <div class="validation"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
                         <label>Imagem de capa</label>
                         <div class="input-group form-validation">
                             <span class="">
@@ -70,7 +78,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Categorias</label>
-                            <div id="categorias"><p>Selecione um tipo de publicação</p></div>
+                            <div id="categorias"><p>Carregando...</p></div>
                         </div>
                     </div>
 
@@ -113,7 +121,6 @@
     <script src="{{ asset('js/select2.min.js')}} "></script>
     <script src="{{ asset('js/publicacaoForm.js?v='.time())}} "></script>
     <script src="{{ asset('js/jquery.datetimepicker.js')}} "></script>
-
     <script>
         jQuery(function($){
             $.datetimepicker.setLocale('pt-BR');
@@ -123,9 +130,15 @@
                 value:{{ old('publicado_em') ?? "new Date()" }},
                 lang:'pt-BR'
             }); 
+            $("#slug").val((($("#slug").val().toLowerCase().replace(/[^a-z0-9-/ /]/g, '')).replace(/ /g,"-")))
+        });
+
+        $('#slug').on('input', function (event) { 
+            this.value = (this.value.replace(/[^a-z0-9-/ /]/g, '')).replace(/ /g,"-");
         });
     </script>
     <script>
+        const categorias = @json($publicacao->categorias);
         const route_prefix = "/filemanager";
         const editor_config_conteudo = 
         {
@@ -177,6 +190,8 @@
 
         (function( $ )
         {
+            
+
             $.fn.filemanager = function(type, options) {
                 type = type || 'file';
 
@@ -198,13 +213,7 @@
 
                         // set or change the preview image src
                         items.forEach(function (item) {
-                            console.log(item)
-                            console.log(target_preview)
                             target_preview.attr('src',item.url);
-                            
-                            // append(
-                            //     $('<img>').css('height', '5rem').attr('src', item.thumb_url)
-                            // );
                         });
 
                         // trigger change event
@@ -214,36 +223,7 @@
                 });
             }
 
-            $('.select2-ajax-tipo-categorias').select2({
-                ajax: {
-                    url: "{{route('tipo.categoria.select2')}}",
-                    dataType: 'json',
-                    processResults: function (data) {
-                        // Transforms the top-level key of the response object from 'items' to 'results'
-                        return {
-                            results: data.data
-                        };
-                    },
-                    cache: true
-                }
-            });
-            $('.select2-ajax-tipo-categorias').on('select2:select', function (e) { 
-                createCategorias(e.params.data.id);
-            });
-
-            $.ajax({
-                url: "{{ route('publicacao.categoria.json',['id'=>$publicacao->id]) }}",
-                type: 'GET',
-                data: {
-                    '_token':'{{csrf_token()}}',
-                },
-                success:function(data){
-                    createCategorias({{ $publicacao->tipo_publicacao }},data)
-                },
-                error:function(data){
-                    console.log(data)
-                }
-            });
+            createCategorias(categorias);
             
         })(jQuery);
 
@@ -286,10 +266,10 @@
 
         lfm('lfm2', 'file', {prefix: route_prefix});
 
-        function createCategorias(id,selecionados = [])
+        function createCategorias(selecionados = [])
         {
             $.ajax({
-                url: "{{ route('categoria.json') }}/"+id,
+                url: "{{ route('categoria.json') }}",
                 type: 'GET',
                 data: {
                     '_token':'{{csrf_token()}}',

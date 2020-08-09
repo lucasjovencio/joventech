@@ -34,6 +34,14 @@
                         </div>
                     </div>
                     <div class="col-md-12">
+                        <div class="form-group form-validation">
+                            <label>Link personalizado</label>
+                            <input data-rule="required" data-msg="Informe o link personalizado da publicação" name="slug" id="slug" type="text" class="form-control" 
+                                placeholder="Link personalizado" value="{{ $publicacao->slug ?? $publicacao->titulo ?? '' }}">
+                            <div class="validation"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
                         <label>Imagem de capa</label>
                         <div class="input-group form-validation">
                             <span class="">
@@ -48,9 +56,9 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group form-validation">
-                            <label>Link do projeto</label>
-                            <input data-rule="required" data-msg="Informe o link do projeto" name="link_externo" type="url" class="form-control" 
-                                placeholder="Link do projeto" value="{{ old('link_externo',$projeto->link_externo ?? '') }}">
+                            <label>slug</label>
+                            <input data-rule="required" data-msg="Informe o slug" name="link_externo" type="url" class="form-control" 
+                                placeholder="slug" value="{{ old('link_externo',$projeto->link_externo ?? '') }}">
                             <div class="validation"></div>
                         </div>
                     </div>
@@ -121,6 +129,11 @@
                 value:{{ old('publicado_em') ?? "new Date()" }},
                 lang:'pt-BR'
             }); 
+            $("#slug").val((($("#slug").val().toLowerCase().replace(/[^a-z0-9-/ /]/g, '')).replace(/ /g,"-")))
+        });
+
+        $('#slug').on('input', function (event) { 
+            this.value = (this.value.replace(/[^a-z0-9-/ /]/g, '')).replace(/ /g,"-");
         });
     </script>
     <script>
