@@ -20,6 +20,7 @@ class CreatePublicaosTable extends Migration
             $table->longText('conteudo')->nullable();
             $table->string('imagem_destaque')->nullable();
             $table->string('link_externo')->nullable();
+            $table->string('slug')->unique()->index()->nullable();
             $table->unsignedBigInteger('users_id')->index();
             $table->foreign('users_id')->references('id')->on('users');
             $table->dateTime('publicado_em');

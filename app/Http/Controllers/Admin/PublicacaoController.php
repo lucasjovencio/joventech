@@ -57,9 +57,9 @@ class PublicacaoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,PublicacaoService $publicacaoService)
     {
-        return view('adm.publicacoes.show',['publicacao'=>$this->findRedis('publicacoes',$id)]);
+        return view('adm.publicacoes.show',['publicacao'=>$publicacaoService->getPost($id)]);
     }
 
     /**

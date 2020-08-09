@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Traits\RedisTrait;
 use App\Models\Categoria;
 use App\Traits\JsonResponseTrait;
+use App\Http\Requests\StoreCategoriaRequest;
+
 class CategoriaController extends Controller
 {
     use RedisTrait,JsonResponseTrait;
@@ -30,9 +32,9 @@ class CategoriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoriaRequest $request)
     {
-        Categoria::create($request->only('nome'));
+        Categoria::create($request->only('nome','slug'));
         return redirect()->back()->with('success','Categoria criada com sucesso!');
     }
 
@@ -56,11 +58,9 @@ class CategoriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreCategoriaRequest $request, $id)
     {
-        Categoria::id($id)->firstOrFail()->update([
-            'nome'=>$request->nome
-        ]);
+        Categoria::id($id)->firstOrFail()->update($request->only('nome','slug'));
         return redirect()->back()->with('success','Categoria atualizada sucesso!');
     }
 

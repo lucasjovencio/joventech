@@ -16,7 +16,7 @@ class Publicacao extends Model
     protected $table = 'publicacoes';
 
     protected $fillable = [
-        'titulo','resumo','tipo_publicacao','link_externo','conteudo','imagem_destaque','users_id','publicado_em','visibilidade'
+        'titulo','resumo','tipo_publicacao','link_externo','conteudo','imagem_destaque','users_id','publicado_em','visibilidade','slug'
     ];
 
     protected $appends = [

@@ -12,7 +12,7 @@ class Categoria extends Model
     protected $table = 'categorias';
 
     protected $fillable = [
-        'nome','categorias_id'
+        'nome','categorias_id','slug'
     ];
 
     public function subCategorias()

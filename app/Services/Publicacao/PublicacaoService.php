@@ -69,6 +69,7 @@ class PublicacaoService
             'resumo'            => $request->resumo             ?? '',
             'conteudo'          => $request->conteudo           ?? '',
             'imagem_destaque'   => $request->imagem_destaque    ?? '',
+            'slug'              => $request->slug               ?? '',
             'users_id'          => Auth::id(),
             'tipo_publicacao'   => "blog",
             'publicado_em'      => ($request->publicado_em)     ? Carbon::createFromFormat('d/m/Y H:i',$request->publicado_em)->format('Y-m-d H:i:s') : now()->format('Y-m-d h:i:s'),
@@ -85,7 +86,8 @@ class PublicacaoService
             'resumo'            => $request->resumo             ?? '',
             'conteudo'          => $request->conteudo           ?? '',
             'imagem_destaque'   => $request->imagem_destaque    ?? '',
-            'tipo_publicacao'   => $request->tipo_publicacao,
+            'slug'              => $request->slug               ?? '',
+            'tipo_publicacao'   => "blog",
             'publicado_em'      => Carbon::createFromFormat('d/m/Y H:i',$request->publicado_em)->format('Y-m-d H:i:s'),
             'visibilidade'      => ($request->visibilidade)     ? 'Publico' : 'Privado',
         ]);

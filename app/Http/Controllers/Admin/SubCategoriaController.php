@@ -30,7 +30,7 @@ class SubCategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        Categoria::create($request->only('nome','categorias_id'));
+        Categoria::create($request->only('nome','categorias_id','slug'));
         return redirect()->back()->with('success','Sub-categoria criada com sucesso!');
     }
 
@@ -43,7 +43,7 @@ class SubCategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Categoria::id($id)->firstOrFail()->update($request->only('nome'));
+        Categoria::id($id)->firstOrFail()->update($request->only('nome','slug'));
         return redirect()->back()->with('success','Sub-categoria atualizada sucesso!');
     }
 
