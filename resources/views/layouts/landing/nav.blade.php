@@ -26,7 +26,7 @@
                     <a class="nav-link js-scroll" href="{{ (Route::is('home.index')) ? '#blog' : route('home.blog')  }}">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll" href="#contact">Contato</a>
+                    <a class="nav-link js-scroll" href="{{ (Route::is('home.index')) ? '#contact' : route('home.index')."#contact"  }}">Contato</a>
                 </li>
             </ul>
         </div>

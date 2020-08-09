@@ -19,6 +19,11 @@ class ProjetoController extends Controller
         if($request->ajax()){
             return $this->jsonResponseSuccess($projetoService->getProjetosPosts($request->skip,$request->take),200);
         }
+        SEOTools::setTitle("Projetos");
+        SEOTools::setDescription("Projetos opensources desenvolvidos com objetivos de compartilhar conhecimentos e adquirir conhecimentos.");
+        SEOTools::opengraph()->setUrl(route('home.projeto'));
+        SEOTools::setCanonical(route('home.projeto'));
+        SEOTools::opengraph()->addProperty('type', 'projects');
         return view('web.projetos.index',['projetos'=>$projetoService->getProjetosPosts()]);
     }
 

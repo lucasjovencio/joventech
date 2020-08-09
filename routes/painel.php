@@ -13,15 +13,15 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('adm.dashboard');
-});
 
+Auth::routes(['verify' => true]);
 
 Route::group(['prefix' => 'laravel-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
-
+Route::get('/', function () {
+    return view('adm.dashboard');
+});
 Route::prefix('publicacoes')->group(function(){
     Route::get('categoria/json','CategoriaController@categoriaJson')->name('categoria.json');
     Route::resource('categoria','CategoriaController');
