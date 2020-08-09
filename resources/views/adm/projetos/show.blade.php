@@ -35,9 +35,17 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group form-validation">
+                            <label>slug</label>
+                            <input data-rule="required" data-msg="Informe o slug" name="slug" id="slug" type="text" class="form-control" 
+                                placeholder="slug" value="{{ $projeto->slug ?? $projeto->titulo ?? '' }}">
+                            <div class="validation"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group form-validation">
                             <label>Link personalizado</label>
-                            <input data-rule="required" data-msg="Informe o link personalizado da publicação" name="slug" id="slug" type="text" class="form-control" 
-                                placeholder="Link personalizado" value="{{ $publicacao->slug ?? $publicacao->titulo ?? '' }}">
+                            <input data-rule="required" data-msg="Informe o link personalizado da publicação"  name="link_externo" type="url" class="form-control" 
+                                placeholder="Link personalizado" value="{{ old('link_externo',$projeto->link_externo ?? '') }}">
                             <div class="validation"></div>
                         </div>
                     </div>
@@ -54,14 +62,7 @@
                         <div id="validation-image" class="validation"></div>
 
                     </div>
-                    <div class="col-md-12">
-                        <div class="form-group form-validation">
-                            <label>slug</label>
-                            <input data-rule="required" data-msg="Informe o slug" name="link_externo" type="url" class="form-control" 
-                                placeholder="slug" value="{{ old('link_externo',$projeto->link_externo ?? '') }}">
-                            <div class="validation"></div>
-                        </div>
-                    </div>
+                    
                     <div class="col-md-12">
                         <div class="form-group form-validation">
                             <label>Data da publicação</label>

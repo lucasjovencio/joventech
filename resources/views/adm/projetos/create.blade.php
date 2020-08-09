@@ -54,7 +54,7 @@
                     <div class="col-md-12">
                         <div class="form-group form-validation">
                             <label>Link externo</label>
-                            <input data-rule="required" data-msg="Informe o link externo" name="titulo_externo" type="url" class="form-control" 
+                            <input data-rule="required" data-msg="Informe o link externo" name="link_externo" type="url" class="form-control" 
                                 placeholder="Link externo" value="{{ old('link_externo') }}">
                             <div class="validation"></div>
                         </div>
