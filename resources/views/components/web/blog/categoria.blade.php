@@ -3,10 +3,10 @@
     <div class="sidebar-content">
         <ul class="list-sidebar">
             @foreach ( ($categorias ?? []) as $categoria)
-                <li><a href="{{ route('home.blog.categoria',['categoria'=>$categoria->nome]) }}">{{ $categoria->nome }}</a></li>
+                <li><a href="{{ route('home.blog.categoria',['categoria'=>$categoria->slug ?? $categoria->nome ?? '']) }}">{{ $categoria->nome }}</a></li>
                 <ul class="list-sidebar ml-4">
                     @foreach ( ($categoria->subcategoria ?? []) as $sub)
-                        <li><a href="{{ route('home.blog.categoria',['categoria'=>$sub->nome]) }}">{{ $sub->nome }}</a></li>
+                        <li><a href="{{ route('home.blog.categoria',['categoria'=>$sub->slug ?? $categoria->nome ??  '']) }}">{{ $sub->nome }}</a></li>
                     @endforeach
                 </ul>
             @endforeach

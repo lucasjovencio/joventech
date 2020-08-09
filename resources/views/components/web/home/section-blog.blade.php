@@ -18,7 +18,7 @@
                 @foreach($posts as $post)
                     <div class="col-md-4">
                         <div class="card card-blog">
-                            <a href="{{ route('home.blog.show',['id'=>$post->id]) }}">
+                            <a href="{{ route('home.blog.show',['id'=>$post->id,'slug'=>$post->slug]) }}">
                                 <div class="card-img" style="background-image: url('{{ $post->imagem_destaque ?? '' }}');height: 200px;background-position: center;background-size: cover;" >
                                 </div>
                             </a>
@@ -30,7 +30,7 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <h3 class="card-title"><a href="{{ route('home.blog.show',['id'=>$post->id]) }}">{{ $post->titulo }}</a></h3>
+                                <h3 class="card-title"><a href="{{ route('home.blog.show',['id'=>$post->id,'slug'=>$post->slug]) }}">{{ $post->titulo }}</a></h3>
                                 <p class="card-description">{!! $post->resumo !!}</p>
                             </div>
                             <div class="card-footer">

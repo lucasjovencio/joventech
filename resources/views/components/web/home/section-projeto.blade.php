@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="w-like">
-                                        <a href="{{ route('home.projeto.show',['id'=>$projeto->id]) }}">
+                                        <a href="{{ route('home.projeto.show',['id'=>$projeto->id,'slug'=>$post->slug]) }}">
                                             <span class="ion-ios-plus-outline"></span>
                                         </a>
                                     </div>
