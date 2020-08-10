@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-Auth::routes(['verify' => true]);
 
 Route::group(['prefix' => 'laravel-filemanager'], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();

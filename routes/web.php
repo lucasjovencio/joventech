@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes(['verify' => true]);
+
 Route::get('/','Web\HomeController@index')->name('home.index');
 
 Route::prefix('blog')->group(function(){
