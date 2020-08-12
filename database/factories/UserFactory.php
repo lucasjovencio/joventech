@@ -19,10 +19,12 @@ use Illuminate\Support\Facades\Hash;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
+        'name' => $faker->firstName,
+        'lastname' => $faker->lastName,
         'email' => "admin@admin.com",
         'email_verified_at' => now(),
         'password' => Hash::make('123123'), // 123123
         'remember_token' => Str::random(10),
+        'super_admin' => true,
     ];
 });

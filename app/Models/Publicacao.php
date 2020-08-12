@@ -25,18 +25,8 @@ class Publicacao extends Model
 
     public function getDataPublicacaoAttribute()
     {
-        $date = Carbon::parse($this->publicado_em)->setTimezone('America/Sao_Paulo');
-        $diff = now()->setTimezone('America/Sao_Paulo')->diffInDays($date);
-        if( $diff == 1){
-            return 'Um dia atrás';
-        }
-        elseif($diff>1){
-            return $date->format('d/m/Y H:i');
-        }
-        elseif($diff==0){
-            return $date->format('H:i');
-        }
-        return $date->format('H:i');
+        $data = Carbon::parse($this->publicado_em);
+        return $data->format('d/m/Y')." às ".$data->format('H:i');
     }
 
     public function scopeId($query,$id)

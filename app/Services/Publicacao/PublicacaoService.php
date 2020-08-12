@@ -30,12 +30,16 @@ class PublicacaoService
         $this->publicacaoCategoriaService = $publicacaoCategoriaService;
     }
 
+    private function all()
+    {
+        if(!$data = $this->getRedis('publicacoes'))
+            $data = $this->setRedis('publicacoes',$this->repo->allArrayPublicacoes());
+        return collect($data);
+    }
+
     public function getAllPublicacoes(Object $request)
     {
-        if(!$publicacoes = $this->getRedis('publicacoes'))
-            $publicacoes = $this->setRedis('publicacoes',$this->repo->allArrayPublicacoes());
-
-        return DataTables::of($publicacoes)
+        return DataTables::of($this->all())
             ->addIndexColumn()
             ->filter(function ($instance) {
                 $instance->collection = $instance->collection->filter(function ($row) {
@@ -98,14 +102,14 @@ class PublicacaoService
 
     public function getBlogPosts($skip=0,$take=2)
     {
-        return \json_decode($this->getCollectRedis('publicacoes')->where('tipo_publicacao',"blog")->where('visibilidade','Publico')->map(function ($collection, $key) {
+        return \json_decode($this->all()->where('tipo_publicacao',"blog")->where('visibilidade','Publico')->map(function ($collection, $key) {
             return collect($collection)->put('categorias',$this->getCollectRedis("publicacao{$collection->id}-categorias"));
         })->sortByDesc('publicado_em')->skip($skip)->take($take));
     }
 
     public function getBlogPostsCategoria($categoria,$skip=0,$take=2)
     {
-        return \json_decode($this->getCollectRedis('publicacoes')
+        return \json_decode($this->all()
             ->where('tipo_publicacao',"blog")
             ->where('visibilidade','Publico')
             ->map(function ($collection, $key) {
@@ -126,7 +130,7 @@ class PublicacaoService
     
     public function getSearchBlogPosts($search)
     {
-        return \json_decode($this->getCollectRedis('publicacoes')
+        return \json_decode($this->all()
                 ->where('tipo_publicacao',"blog")
                 ->where('visibilidade','Publico')
                 ->filter(function($item) use ($search) {
@@ -147,20 +151,20 @@ class PublicacaoService
 
     public function getBlogLast3()
     {
-        return \json_decode($this->getCollectRedis('publicacoes')->where('tipo_publicacao',"blog")->where('visibilidade','Publico')->map(function ($collection, $key) {
+        return \json_decode($this->all()->where('tipo_publicacao',"blog")->where('visibilidade','Publico')->map(function ($collection, $key) {
             return collect($collection)->put('categorias',$this->getCollectRedis("publicacao{$collection->id}-categorias"));
         })->sortByDesc('publicado_em')->take(3));
     }
 
     public function getAllPosts()
     {
-        return \json_decode($this->getCollectRedis('publicacoes')->where('tipo_publicacao',"blog")->where('visibilidade','Publico')->map(function ($collection, $key) {
+        return \json_decode($this->all()->where('tipo_publicacao',"blog")->where('visibilidade','Publico')->map(function ($collection, $key) {
             return collect($collection)->put('categorias',$this->getCollectRedis("publicacao{$collection->id}-categorias"));
         })->sortByDesc('publicado_em'));
     }
 
     public function getPost($id){
-        return \json_decode($this->getCollectRedis('publicacoes')->where('id',$id)->where('visibilidade','Publico')->map(function ($collection, $key) {
+        return \json_decode($this->all()->where('id',$id)->where('visibilidade','Publico')->map(function ($collection, $key) {
             return collect($collection)->put('categorias',$this->getCollectRedis("publicacao{$collection->id}-categorias"));
         })->first());
     }

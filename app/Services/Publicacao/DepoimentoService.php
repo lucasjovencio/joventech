@@ -26,12 +26,16 @@ class DepoimentoService
         $this->repo = $repo;
     }
 
+    private function all()
+    {
+        if(!$data = $this->getRedis('publicacoes'))
+            $data = $this->setRedis('publicacoes',$this->repo->allArrayPublicacoes());
+        return collect($data);
+    }
+
     public function getAllDepoimentosDataTable(Object $request)
     {
-        if(!$depoimentos = $this->getRedis('publicacoes'))
-            $depoimentos = $this->setRedis('publicacoes',$this->repo->allArrayPublicacoes());
-
-        return DataTables::of($depoimentos)
+        return DataTables::of($this->all())
             ->addIndexColumn()
             ->filter(function ($instance) {
                 $instance->collection = $instance->collection->filter(function ($row) {
@@ -86,7 +90,7 @@ class DepoimentoService
 
     public function getDepoimentos()
     {
-        return \json_decode($this->getCollectRedis('publicacoes')
+        return \json_decode($this->all()
             ->where('tipo_publicacao',"depoimento")
             ->where('visibilidade','Publico')
             ->sortByDesc('publicado_em')

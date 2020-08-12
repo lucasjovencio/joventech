@@ -26,12 +26,16 @@ class ProjetoService
         $this->repo = $repo;
     }
 
+    private function all()
+    {
+        if(!$data = $this->getRedis('publicacoes'))
+            $data = $this->setRedis('publicacoes',$this->repo->allArrayPublicacoes());
+        return collect($data);
+    }
+
     public function getAllProjetosDataTable(Object $request)
     {
-        if(!$projetos = $this->getRedis('publicacoes'))
-            $projetos = $this->setRedis('publicacoes',$this->repo->allArrayPublicacoes());
-
-        return DataTables::of($projetos)
+        return DataTables::of($this->all())
             ->addIndexColumn()
             ->filter(function ($instance) {
                 $instance->collection = $instance->collection->filter(function ($row) {
@@ -90,7 +94,7 @@ class ProjetoService
 
     public function getProjetos()
     {
-        return \json_decode($this->getCollectRedis('publicacoes')
+        return \json_decode($this->all()
             ->where('tipo_publicacao',"projeto")
             ->where('visibilidade','Publico')
             ->sortByDesc('publicado_em')
@@ -99,7 +103,7 @@ class ProjetoService
 
     public function getProjetosPosts($skip=0,$take=2)
     {
-        return \json_decode($this->getCollectRedis('publicacoes')
+        return \json_decode($this->all()
             ->where('tipo_publicacao',"projeto")
             ->where('visibilidade','Publico')
             ->sortByDesc('publicado_em')
@@ -109,7 +113,7 @@ class ProjetoService
 
     public function getProjetoLast3()
     {
-        return \json_decode($this->getCollectRedis('publicacoes')->where('tipo_publicacao',"projeto")->where('visibilidade','Publico')->sortByDesc('publicado_em')->take(3));
+        return \json_decode($this->all()->where('tipo_publicacao',"projeto")->where('visibilidade','Publico')->sortByDesc('publicado_em')->take(3));
     }
     
 }

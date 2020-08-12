@@ -25,7 +25,7 @@ class StoreSubCategoriaRequest extends FormRequest
     {
         return [
             'nome'              => 'required|max:255',
-            'slug'              => 'required|max:255|regex:/(^([a-z0-9-\-]+)?$)/u|unique:categorias,slug,'.request()->route('sub_categorium')
+            'slug'              => 'required|max:255|regex:/(^([a-z0-9-\-]+)?$)/u|unique:categorias,slug,'.request()->route('sub_categorium'),
             'categorias_id'     => 'required|exists:categorias,id'
         ];;
     }

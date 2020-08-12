@@ -21,12 +21,16 @@ class CategoriaService
         $this->repo = $repo;
     }
 
+    private function all()
+    {
+        if(!$data = $this->getRedis('categorias'))
+            $data = $this->setRedis('categorias',$this->repo->allArrayCategorias());
+        return collect($data);
+    }
+
     public function getCategoriasDataTable(Object $request)
     {
-        if(!$categorias = $this->getRedis('categorias'))
-            $categorias = $this->setRedis('categorias',$this->repo->allArrayCategorias());
-
-        return DataTables::of($categorias)
+        return DataTables::of($this->all())
                 ->addIndexColumn()
                 ->filter(function ($instance) use ($request) {
                     if(!empty($request->get('nome'))){
@@ -49,14 +53,14 @@ class CategoriaService
 
     public function getCategoriaSubCategorias()
     {
-        return $this->getCollectRedis('categorias')->map(function ($collection, $key) {
+        return $this->all()->map(function ($collection, $key) {
             return collect($collection)->put('subcategoria',$this->getCollectRedis("subcategorias{$collection->id}"));
         });
     }
 
     public function getBlogCategoriasSubCategoria()
     {
-        return \json_decode($this->getCollectRedis('categorias')->map(function ($collection, $key) {
+        return \json_decode($this->all()->map(function ($collection, $key) {
             return collect($collection)->put('subcategoria',$this->getCollectRedis("subcategorias{$collection->id}"));
         }));
     }

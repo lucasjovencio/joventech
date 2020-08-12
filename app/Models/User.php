@@ -2,17 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-/**
- * @method public bool isSuperAdmin()
- * 
-*/
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable,SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','lastname','super_admin'
     ];
 
     /**
@@ -45,6 +42,6 @@ class User extends Authenticatable
 
     public function isSuperAdmin() : bool
     {
-        return true;
+        return ($this->super_admin) ? true : false;
     }
 }

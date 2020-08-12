@@ -21,12 +21,16 @@ class SubCategoriaService
         $this->repo = $repo;
     }
 
+    private function all($id)
+    {
+        if(!$data = $this->getRedis("subcategorias{$id}"))
+            $data = $this->setRedis("subcategorias{$id}",$this->repo->allArrayParents($id));
+        return collect($data);
+    }
+
     public function getSubCategoriasDataTable(Object $request,$id)
     {
-        if(!$subcategorias = $this->getRedis("subcategorias{$id}"))
-            $subcategorias = $this->setRedis("subcategorias{$id}",$this->repo->allArrayParents($id));
-
-        return DataTables::of($subcategorias)
+        return DataTables::of($this->all($id))
                 ->addIndexColumn()
                 ->filter(function ($instance) use ($request) {
                     if(!empty($request->get('nome'))){
