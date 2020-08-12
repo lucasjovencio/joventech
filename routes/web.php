@@ -28,3 +28,5 @@ Route::prefix('projetos')->group(function(){
     Route::get('/{id?}/{slug?}','Web\ProjetoController@show')->name('home.projeto.show');
 });
 
+Route::resource('contato','Web\ContatoController');
+

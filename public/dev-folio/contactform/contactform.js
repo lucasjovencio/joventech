@@ -11,18 +11,15 @@ jQuery(document).ready(function ($) {
 
 			var i = $(this); // current input
 			var rule = i.attr('data-rule');
-			console.log(rule)
 			if (rule !== undefined) {
 				var ierror = false; // error flag for current input
 				var pos = rule.indexOf(':', 0);
-				console.log(pos)
 				if (pos >= 0) {
 					var exp = rule.substr(pos + 1, rule.length);
 					rule = rule.substr(0, pos);
 				} else {
 					rule = rule.substr(pos + 1, rule.length);
 				}
-				console.log(rule)
 				switch (rule) {
 					case 'required':
 						if (i.val() === '') {
@@ -93,25 +90,36 @@ jQuery(document).ready(function ($) {
 		else var str = $(this).serialize();
 		var action = $(this).attr('action');
 		if (!action) {
-			action = 'contactform/contactform.php';
+			return false;
 		}
+		$("#errormessage").html('');
 		$.ajax({
 			type: "POST",
 			url: action,
 			data: str,
 			success: function (msg) {
-				// alert(msg);
-				if (msg == 'OK') {
-					$("#sendmessage").addClass("show");
-					$("#errormessage").removeClass("show");
-					$('.contactForm').find("input, textarea").val("");
-				} else {
-					$("#sendmessage").removeClass("show");
-					$("#errormessage").addClass("show");
-					$('#errormessage').html(msg);
+				$("#sendmessage").addClass("show");
+				$("#errormessage").removeClass("show");
+				$("#errormessage").html('');
+				$('.contactForm').find("input, textarea").val("");
+			},
+            error: function (request, status, error) {
+				$("#sendmessage").removeClass("show");
+				$("#errormessage").addClass("show");
+				$('#errormessage').html("<ul id='errorsContact'></ul>");
+                if(request.status == 422){
+					for(let key in request.responseJSON.error){
+						$('#errorsContact').append("<li style='text-align: left;'>"+request.responseJSON.error[key]+"</li>");
+					}
+					for(let key in request.responseJSON.errors){
+						for(let subkey in request.responseJSON.errors[key]){
+							$('#errorsContact').append("<li style='text-align: left;'>"+request.responseJSON.errors[key][subkey]+"</li>");
+						}
+					}
+				}else{
+					$("#errormessage").html('Ops... Um erro inesperado aconteceu.');
 				}
-
-			}
+            }
 		});
 		return false;
 	});

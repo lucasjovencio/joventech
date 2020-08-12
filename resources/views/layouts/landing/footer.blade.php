@@ -13,7 +13,7 @@
   <script src="{{ asset('dev-folio/lib/lightbox/js/lightbox.min.js') }}"></script>
   <script src="{{ asset('dev-folio/lib/typed/typed.min.js') }}"></script>
   <!-- Contact Form JavaScript File -->
-  <script src="{{ asset('dev-folio/contactform/contactform.js') }}"></script>
+  <script src="{{ asset('dev-folio/contactform/contactform.js?v='.time()) }}"></script>
 
   <!-- Template Main Javascript File -->
   <script src="{{ asset('dev-folio/js/main.js') }}"></script>
