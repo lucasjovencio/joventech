@@ -18,7 +18,7 @@
 				</div>
 				<ul class="nav">
 					<li class="">
-						<a href="./dashboard.html">
+						<a href="{{route('dashboard')}}">
 							<i class="tim-icons icon-chart-pie-36"></i>
 							<p>Dashboard</p>
 						</a>
@@ -45,6 +45,12 @@
 						<a href="{{ route('projeto.index') }}">
 							<i class="tim-icons icon-align-center"></i>
 							<p>Projetos</p>
+						</a>
+					</li>
+					<li class="@if(Route::is('contato.*')) active @endif">
+						<a href="{{ route('contato.index') }}">
+							<i class="tim-icons icon-align-center"></i>
+							<p>Mensagens</p>
 						</a>
 					</li>
 				</ul>
@@ -75,26 +81,11 @@
 					</button>
 					<div class="collapse navbar-collapse" id="navigation">
 						<ul class="navbar-nav ml-auto">
-							<li class="dropdown nav-item">
-								<a href="javascript:void(0)" class="dropdown-toggle nav-link" data-toggle="dropdown">
-									<div class="notification d-none d-lg-block d-xl-block"></div>
-									<i class="tim-icons icon-sound-wave"></i>
-									<p class="d-lg-none">
-										Notifications
-									</p>
-								</a>
-								<ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
-									<li class="nav-link"><a href="#" class="nav-item dropdown-item">Mike John responded to your email</a></li>
-									<li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">You have 5 more tasks</a></li>
-									<li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Your friend Michael is in town</a></li>
-									<li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Another notification</a></li>
-									<li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Another one</a></li>
-								</ul>
-							</li>
+							<x-admin.dashboard.notificacao/>
 							<li class="dropdown nav-item">
 								<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 									<div class="photo">
-										<img src="../assets/img/anime3.png" alt="Profile Photo">
+										<img src="{{Auth::user()->foto ?? asset('black-dashboard-master/assets/img/default-avatar.png')}}" alt="Profile Photo">
 									</div>
 									<b class="caret d-none d-lg-block d-xl-block"></b>
 									<p class="d-lg-none">
@@ -102,10 +93,9 @@
 									</p>
 								</a>
 								<ul class="dropdown-menu dropdown-navbar">
-									<li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Profile</a></li>
-									<li class="nav-link"><a href="javascript:void(0)" class="nav-item dropdown-item">Settings</a></li>
+									<li class="nav-link"><a href="{{ route('perfil') }}" class="nav-item dropdown-item">Perfil</a></li>
 									<li class="dropdown-divider"></li>
-									<li class="nav-link"><a href="#" onclick="document.getElementById('logout-form').submit()" class="nav-item dropdown-item">Log out</a></li>
+									<li class="nav-link"><a href="#" onclick="document.getElementById('logout-form').submit()" class="nav-item dropdown-item">Sair</a></li>
 									<form id="logout-form" action="{{ route('logout') }}" method="post">@csrf</form>
 								</ul>
 							</li>

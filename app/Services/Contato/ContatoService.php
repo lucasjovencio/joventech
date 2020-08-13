@@ -22,25 +22,25 @@ class ContatoService
         $this->repo = $repo;
     }
 
-    public function getAllPublicacoes(Object $request)
+    public function getAllContatos(Object $request)
     {
         return DataTables::of($this->repo->allArrayContatos())
             ->addIndexColumn()
             ->addColumn('nome', function($row){
-                return $row->nome ?? '';
+                return $row['nome'] ?? '';
             })
             ->addColumn('email', function($row){
-                return  $row->email;
+                return  $row['email'] ?? '';
             })
             ->addColumn('assunto', function($row){
-                return  $row->assunto ?? '';
+                return  $row['assunto'] ?? '';
             })
             ->addColumn('enviado', function($row){
-                return  Carbon::parse($row->created_at)->format('d/m/Y H:i');
+                return Carbon::parse($row['created_at'])->format('d/m/Y H:i');
             })
             ->addColumn('action', function($row){
-                $btn = '<a href="'.route('contato.show',['contato'=>$row->id]).'" class="edit btn btn-primary btn-sm">Acessar</a>';
-                $btn .= ' <a href="#" data-toggle="modal" id="" data-target="#remover" data-nome="'.($row->assunto ?? '').'" data-id="'.$row->id.'" data-src="'.route('contato.destroy',['contato'=>$row->id]).'" onClick="remover(this)" class=" btn btn-danger btn-sm">Excluir</a>';
+                $btn = '<a href="'.route('contato.show',['contato'=>$row['id']]).'" class="edit btn btn-primary btn-sm">Acessar</a>';
+                $btn .= ' <a href="#" data-toggle="modal" id="" data-target="#remover" data-nome="'.($row['assunto'] ?? '').'" data-id="'.$row['id'].'" data-src="'.route('contato.destroy',['contato'=>$row['id']]).'" onClick="remover(this)" class=" btn btn-danger btn-sm">Excluir</a>';
                 return $btn;
             })
             ->rawColumns(['action'])

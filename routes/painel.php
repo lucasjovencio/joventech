@@ -20,7 +20,8 @@ Route::group(['prefix' => 'laravel-filemanager'], function () {
 });
 Route::get('/', function () {
     return view('adm.dashboard');
-});
+})->name('dashboard');
+
 Route::prefix('publicacoes')->group(function(){
     Route::get('categoria/json','CategoriaController@categoriaJson')->name('categoria.json');
     Route::resource('categoria','CategoriaController');
@@ -31,3 +32,7 @@ Route::prefix('publicacoes')->group(function(){
 
 Route::resource('depoimento','DepoimentoController');
 Route::resource('projeto','ProjetoController');
+Route::resource('contato','ContatoController');
+Route::get('perfil','PerfilController@index')->name('perfil');
+Route::post('perfil-update/{id}','PerfilController@update')->name('perfil.update');
+Route::post('perfil-update/password/{id}','PerfilController@password')->name('perfil.update.password');

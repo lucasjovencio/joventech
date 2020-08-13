@@ -20,6 +20,7 @@ class CreateContatosTable extends Migration
             $table->string('assunto');
             $table->text('mensagem');
             $table->uuid('codigo');
+            $table->boolean('lido')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes(['verify' => true]);
 
 Route::get('/','Web\HomeController@index')->name('home.index');
+Route::post('/contato','Web\ContatoController@store')->name('home.contato.store');
 
 Route::prefix('blog')->group(function(){
     Route::get('/','Web\PublicacaoController@index')->name('home.blog');
@@ -28,5 +29,4 @@ Route::prefix('projetos')->group(function(){
     Route::get('/{id?}/{slug?}','Web\ProjetoController@show')->name('home.projeto.show');
 });
 
-Route::resource('contato','Web\ContatoController');
 

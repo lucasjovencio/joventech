@@ -62,7 +62,7 @@
 									</h5>
 								</div>
 								<div>
-									<form action="{{route('contato.store')}}" method="post" role="form" class="contactForm">
+									<form action="{{route('home.contato.store')}}" method="post" role="form" class="contactForm">
 										@csrf
 										<div id="sendmessage">
 											Mensagem enviada com sucesso, obrigado!
@@ -71,7 +71,7 @@
 										<div class="row">
 											<div class="col-md-12 mb-3">
 												<div class="form-group">
-													<input type="text" name="nome" class="form-control" id="name"
+													<input type="text" name="nome" class="form-control input-text" id="name"
 														placeholder="Nome" data-rule="minlen:4"
 														data-msg="Seu nome é obrgatório" />
 													<div class="validation"></div>
@@ -79,7 +79,7 @@
 											</div>
 											<div class="col-md-12 mb-3">
 												<div class="form-group">
-													<input type="email" class="form-control" name="email" id="email"
+													<input type="email" class="form-control input-text" name="email" id="email"
 														placeholder="Email" data-rule="email"
 														data-msg="Seu email é obrgatório" />
 													<div class="validation"></div>
@@ -87,7 +87,7 @@
 											</div>
 											<div class="col-md-12 mb-3">
 												<div class="form-group">
-													<input type="text" class="form-control" name="assunto" id="subject"
+													<input type="text" class="form-control input-text" name="assunto" id="subject"
 														placeholder="Assunto" data-rule="minlen:4"
 														data-msg="O assunto é obrigatório" />
 													<div class="validation"></div>
@@ -95,7 +95,7 @@
 											</div>
 											<div class="col-md-12 mb-3">
 												<div class="form-group">
-													<textarea class="form-control" name="mensagem" rows="5"
+													<textarea class="form-control input-text" name="mensagem" rows="5"
 														data-rule="required" data-msg="A mensagem é obrigatória"
 														placeholder="Mensagem"></textarea>
 													<div class="validation"></div>

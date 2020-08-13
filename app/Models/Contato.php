@@ -12,11 +12,16 @@ class Contato extends Model
     protected $table = 'contatos';
 
     protected $fillable = [
-        'nome','email','assunto','mensagem','codigo'
+        'nome','email','assunto','mensagem','codigo','lido'
     ];
 
     public function scopeId($query,$id)
     {
         return $query->where('id',$id);
+    }
+
+    public function scopeUnread($query)
+    {
+        return $query->where('lido',0);
     }
 }
