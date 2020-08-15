@@ -168,6 +168,7 @@ return [
 
         Yajra\DataTables\DataTablesServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
+        AlbertCht\InvisibleReCaptcha\InvisibleReCaptchaServiceProvider::class,
 
         /*
          * Application Service Providers...

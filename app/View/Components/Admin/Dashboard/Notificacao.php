@@ -3,7 +3,7 @@
 namespace App\View\Components\Admin\Dashboard;
 
 use Illuminate\View\Component;
-use App\Models\Contato;
+use App\Models\Lead;
 class Notificacao extends Component
 {
     /**
@@ -23,6 +23,6 @@ class Notificacao extends Component
      */
     public function render()
     {
-        return view('components.admin.dashboard.notificacao',['contatos'=>Contato::unread()->get()]);
+        return view('components.admin.dashboard.notificacao',['contatos'=>Lead::unread()->get()]);
     }
 }

@@ -64,6 +64,8 @@
 								<div>
 									<form action="{{route('home.contato.store')}}" method="post" role="form" class="contactForm">
 										@csrf
+										{{-- {!! app('captcha')->render(); !!} --}}
+										@captchaHTML
 										<div id="sendmessage">
 											Mensagem enviada com sucesso, obrigado!
 										</div>
@@ -173,4 +175,5 @@
 @endsection
 
 @section('js')
+@captchaScripts
 @endsection

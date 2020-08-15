@@ -23,7 +23,7 @@ class PerfilController extends Controller
 
     public function update(StorePerfilRequest $request)
     {
-        Auth::user()->update([
+        auth()->user()->update([
             'name'      =>  $request->name,
             'lastname'  =>  $request->lastname,
             'email'     =>  $request->email,
@@ -34,10 +34,10 @@ class PerfilController extends Controller
 
     public function password(StorePerfilPasswordRequest $request)
     {
-        if(!Hash::check($request->current,Auth::user()->password)):
+        if(!Hash::check($request->current,auth()->user()->password)):
             return redirect()->back()->with('danger','Senha atual inválida.');
         endif;
-        Auth::user()->update(['password'=>Hash::make($request->password)]);
+        auth()->user()->update(['password'=>Hash::make($request->password)]);
         return redirect()->back()->with('success','Senha atualizada com sucesso!');
     }
 }

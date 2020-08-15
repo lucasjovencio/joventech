@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes(['verify' => true]);
 
 Route::get('/','Web\HomeController@index')->name('home.index');
-Route::post('/contato','Web\ContatoController@store')->name('home.contato.store');
+Route::post('/lead','Web\LeadController@store')->name('home.contato.store');
 
 Route::prefix('blog')->group(function(){
     Route::get('/','Web\PublicacaoController@index')->name('home.blog');

@@ -32,7 +32,10 @@ Route::prefix('publicacoes')->group(function(){
 
 Route::resource('depoimento','DepoimentoController');
 Route::resource('projeto','ProjetoController');
-Route::resource('contato','ContatoController');
-Route::get('perfil','PerfilController@index')->name('perfil');
-Route::post('perfil-update/{id}','PerfilController@update')->name('perfil.update');
-Route::post('perfil-update/password/{id}','PerfilController@password')->name('perfil.update.password');
+Route::resource('lead','LeadController');
+
+Route::prefix('perfil')->group(function(){
+    Route::get('/','PerfilController@index')->name('perfil');
+    Route::post('update/{id}','PerfilController@update')->name('perfil.update');
+    Route::post('update/password/{id}','PerfilController@password')->name('perfil.update.password');
+});

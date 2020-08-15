@@ -54,7 +54,7 @@
 	<link href="{{ asset('dev-folio/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('dev-folio/lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
 	<!-- Main Stylesheet File -->
-	<link href="{{ asset('dev-folio/css/style.css') }}" rel="stylesheet">
+	<link href="{{ asset('dev-folio/css/style.css?v=').time() }}" rel="stylesheet">
 	<style>
 		.intro .overlay-itro,.overlay-mf {
 			background-color: rgb(0 0 0);

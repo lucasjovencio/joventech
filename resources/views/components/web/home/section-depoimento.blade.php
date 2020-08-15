@@ -1,4 +1,4 @@
-<div class="testimonials paralax-mf bg-image">
+<div class="testimonials paralax-mf bg-image" id="testimonials">
 	<div class="overlay-mf"></div>
 	<div class="container">
 		<div class="row">

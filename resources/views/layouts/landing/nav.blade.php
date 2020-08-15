@@ -20,7 +20,7 @@
                     <a class="nav-link js-scroll" href="{{ (Route::is('home.index')) ? '#service' : route('home.index')."#service"  }}">Qualificações</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll" href="{{ (Route::is('home.index')) ? '#work' : route('home.index')."#work"  }}">Depoimentos</a>
+                    <a class="nav-link js-scroll" href="{{ (Route::is('home.index')) ? '#work' : route('home.index')."#work"  }}">Portfolio</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll" href="{{ (Route::is('home.index')) ? '#blog' : route('home.blog')  }}">Blog</a>

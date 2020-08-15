@@ -4,6 +4,8 @@
     <style>
         .article-content > *{
             float: none !important;
+            word-break: break-word;
+            width: 100% !important;
         }
         img{
             max-width: 100%;

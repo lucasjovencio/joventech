@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\JsonResponseTrait;
-use App\Http\Requests\StoreContatoRequest;
-use App\Services\Contato\ContatoService;
+use App\Http\Requests\StoreLeadRequest;
+use App\Services\Lead\LeadService;
 
-class ContatoController extends Controller
+class LeadController extends Controller
 {
     use JsonResponseTrait;
 
@@ -18,13 +18,13 @@ class ContatoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreContatoRequest $request,ContatoService $contatoService)
+    public function store(StoreLeadRequest $request,LeadService $leadService)
     {
         try{
-            $contatoService->create($request);
+            $leadService->create($request);
             return $this->jsonResponseSuccess('success',201);
         }catch(Exception $e){
-            return $this->jsonResponseError("Ops...",$e->getStatus());
+            return $this->jsonResponseError("Ops...",500);
         }
         
     }

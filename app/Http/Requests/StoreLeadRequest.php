@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreContatoRequest extends FormRequest
+class StoreLeadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,6 +13,7 @@ class StoreContatoRequest extends FormRequest
      */
     public function authorize()
     {
+        dd(request());
         return true;
     }
 
@@ -24,10 +25,11 @@ class StoreContatoRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome'          => 'required|max:255',
-            'email'         => 'required|email|max:255',
-            'assunto'       => 'required|max:255',
-            'mensagem'      => 'required|max:5000',
+            'nome'                  => 'required|max:255',
+            'email'                 => 'required|email|max:255',
+            'assunto'               => 'required|max:255',
+            'mensagem'              => 'required|max:5000',
+            'g-recaptcha-response'  => 'required|captcha'
         ];;
     }
 
@@ -49,6 +51,8 @@ class StoreContatoRequest extends FormRequest
             'assunto.max'                    => 'O assunto excedeu 255 caracteres.',
             'mensagem.required'              => 'A mensagem é obrigatória.',
             'mensagem.max'                   => 'A mensagem excedeu 5000 caracteres.',
+            'g-recaptcha-response.required'  => 'O recaptcha é obrigatório.',
+            'g-recaptcha-response.captcha'   => 'Validação de recaptcha inválido.',
         ];
     }
 }

@@ -44,8 +44,8 @@
                 </div>
             @endforeach
         </div>
-        <div class="row justify-content-md-center">
-            <p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="{{ route('home.projeto') }}" role="button">Mais projetos</a></p>
+        <div class="row justify-content-md-center mb-4">
+            <p class="center"><a class="btn btn-primary btn js-scroll px-4" href="{{ route('home.projeto') }}" role="button">Mais projetos</a></p>
         </div>
     </div>
 </section>

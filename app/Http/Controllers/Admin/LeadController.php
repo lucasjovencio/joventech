@@ -4,20 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\Contato\ContatoService;
-use App\Models\Contato;
+use App\Services\Lead\LeadService;
+use App\Models\Lead;
 
-class ContatoController extends Controller
+class LeadController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request,ContatoService $contatoService)
+    public function index(Request $request,LeadService $leadService)
     {
         if($request->ajax()){
-            return $contatoService->getAllContatos($request);
+            return $leadService->getAllLeads($request);
         }
         return view('adm.contatos.index');
     }
@@ -28,11 +28,11 @@ class ContatoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id,ContatoService $contatoService)
+    public function show($id,LeadService $leadService)
     {
-        $contato = $contatoService->find($id);
-        $contato->update(['lido'=>true]);
-        return view('adm.contatos.show',['contato'=>$contato]);
+        $lead = $leadService->find($id);
+        $lead->update(['lido'=>true]);
+        return view('adm.leads.show',['lead'=>$contato]);
     }
 
     /**
@@ -43,7 +43,7 @@ class ContatoController extends Controller
      */
     public function destroy($id)
     {
-        Contato::id($id)->firstOrFail()->delete();
+        Lead::id($id)->firstOrFail()->delete();
         return redirect()->route('contato.index')->with('success','Contato removido com sucesso!');
     }
 }
