@@ -13,7 +13,6 @@ class StoreLeadRequest extends FormRequest
      */
     public function authorize()
     {
-        dd(request());
         return true;
     }
 
@@ -24,13 +23,21 @@ class StoreLeadRequest extends FormRequest
      */
     public function rules()
     {
+        if(config('app.google.recaptcha_secret_key')){
+            return [
+                'nome'                  => 'required|max:255',
+                'email'                 => 'required|email|max:255',
+                'assunto'               => 'required|max:255',
+                'mensagem'              => 'required|max:5000',
+                'g-recaptcha-response'  => 'required|captcha'
+            ];
+        }
         return [
             'nome'                  => 'required|max:255',
             'email'                 => 'required|email|max:255',
             'assunto'               => 'required|max:255',
             'mensagem'              => 'required|max:5000',
-            'g-recaptcha-response'  => 'required|captcha'
-        ];;
+        ];
     }
 
 

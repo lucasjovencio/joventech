@@ -47,10 +47,10 @@
 							<p>Projetos</p>
 						</a>
 					</li>
-					<li class="@if(Route::is('contato.*')) active @endif">
-						<a href="{{ route('contato.index') }}">
+					<li class="@if(Route::is('lead.*')) active @endif">
+						<a href="{{ route('lead.index') }}">
 							<i class="tim-icons icon-align-center"></i>
-							<p>Mensagens</p>
+							<p>Leads</p>
 						</a>
 					</li>
 				</ul>

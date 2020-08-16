@@ -65,7 +65,9 @@
 									<form action="{{route('home.contato.store')}}" method="post" role="form" class="contactForm">
 										@csrf
 										{{-- {!! app('captcha')->render(); !!} --}}
-										@captchaHTML
+										@if(config('app.google.recaptcha_key'))
+											@captchaHTML
+										@endif
 										<div id="sendmessage">
 											Mensagem enviada com sucesso, obrigado!
 										</div>
@@ -175,5 +177,7 @@
 @endsection
 
 @section('js')
-@captchaScripts
+	@if(config('app.google.recaptcha_key'))
+		@captchaScripts
+	@endif
 @endsection

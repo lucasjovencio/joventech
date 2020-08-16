@@ -19,7 +19,7 @@ class LeadController extends Controller
         if($request->ajax()){
             return $leadService->getAllLeads($request);
         }
-        return view('adm.contatos.index');
+        return view('adm.leads.index');
     }
 
     /**
@@ -32,7 +32,7 @@ class LeadController extends Controller
     {
         $lead = $leadService->find($id);
         $lead->update(['lido'=>true]);
-        return view('adm.leads.show',['lead'=>$contato]);
+        return view('adm.leads.show',['lead'=>$lead]);
     }
 
     /**
@@ -44,6 +44,6 @@ class LeadController extends Controller
     public function destroy($id)
     {
         Lead::id($id)->firstOrFail()->delete();
-        return redirect()->route('contato.index')->with('success','Contato removido com sucesso!');
+        return redirect()->route('lead.index')->with('success','Lead removido com sucesso!');
     }
 }

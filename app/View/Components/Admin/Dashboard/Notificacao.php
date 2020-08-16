@@ -23,6 +23,6 @@ class Notificacao extends Component
      */
     public function render()
     {
-        return view('components.admin.dashboard.notificacao',['contatos'=>Lead::unread()->get()]);
+        return view('components.admin.dashboard.notificacao',['leads'=>Lead::unread()->get()]);
     }
 }
