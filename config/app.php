@@ -235,17 +235,17 @@ return [
     ],
 
     'disqus'    => [
-        'host' => ENV('DISQUS_HOST','')
+        'host' => ENV('DISQUS_HOST',null)
     ],
 
     'hubspot'   => [
-        'script' => ENV('HUBSPOT_SCRIPT','')
+        'script' => ENV('HUBSPOT_SCRIPT',null)
     ],
 
     'google'    => [
-        'analytics_id'  => ENV('GOOGLE_ANALYTICS_ID',''),
-        'gtm'           => ENV('GOOGLE_GTM',''),
-        'recaptcha_key'              => ENV('INVISIBLE_RECAPTCHA_SITEKEY',''),
-        'recaptcha_secret_key'       => ENV('INVISIBLE_RECAPTCHA_SECRETKEY','')
+        'analytics_id'  => ENV('GOOGLE_ANALYTICS_ID',null),
+        'gtm'           => ENV('GOOGLE_GTM',null),
+        'recaptcha_key'              => ENV('INVISIBLE_RECAPTCHA_SITEKEY',null),
+        'recaptcha_secret_key'       => ENV('INVISIBLE_RECAPTCHA_SECRETKEY',null)
     ]
 ];
