@@ -245,5 +245,7 @@ return [
     'google'    => [
         'analytics_id'  => ENV('GOOGLE_ANALYTICS_ID',''),
         'gtm'           => ENV('GOOGLE_GTM',''),
+        'recaptcha_key'              => ENV('INVISIBLE_RECAPTCHA_SITEKEY',''),
+        'recaptcha_secret_key'       => ENV('INVISIBLE_RECAPTCHA_SECRETKEY','')
     ]
 ];
