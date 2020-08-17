@@ -1,5 +1,6 @@
 <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
   <div id="preloader"></div>
+  <div id="preloader-form"></div>
 
   <!-- JavaScript Libraries -->
   <script src="{{ asset('dev-folio/lib/jquery/jquery.min.js') }}"></script>
@@ -16,7 +17,7 @@
   <script src="{{ asset('dev-folio/contactform/contactform.js?v='.time()) }}"></script>
 
   <!-- Template Main Javascript File -->
-  <script src="{{ asset('dev-folio/js/main.js') }}"></script>
+  <script src="{{ asset('dev-folio/js/main.js?v='.time()) }}"></script>
 
   @if(config('app.hubspot.script'))
     <!-- Start of HubSpot Embed Code -->

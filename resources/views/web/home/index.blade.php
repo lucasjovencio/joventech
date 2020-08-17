@@ -1,17 +1,18 @@
 @extends('layouts.landing.main')
 
 @section('css')
-<style>
-	.card-blog .card-description {
-		max-height: 100px;
-		overflow: hidden;
-		word-break: break-word;
-	}
+	<style>
+		.card-blog .card-description {
+			max-height: 100px;
+			overflow: hidden;
+			word-break: break-word;
+		}
 
-	.card-blog .card-category-box {
-		position: initial;
-	}
-</style>
+		.card-blog .card-category-box {
+			position: initial;
+		}
+	</style>
+	<meta name="grecaptcha-key" content="{{config('app.google.recaptcha_key')}}">
 @endsection
 
 @section('main')
@@ -109,6 +110,7 @@
 												<button type="submit" class="button button-a button-big button-rouded">
 													Enviar
 												</button>
+												<div id="validation-submit"></div>
 											</div>
 										</div>
 									</form>
@@ -178,6 +180,31 @@
 
 @section('js')
 	@if(config('app.google.recaptcha_key'))
-		@captchaScripts
+		<script src="https://www.google.com/recaptcha/api.js?render={{config('app.google.recaptcha_key')}}" async defer></script>
+		<script>var _submitForm,_captchaForm,_captchaSubmit,_execute=true;</script>
+		<script>
+			window.addEventListener('load', _loadCaptcha);
+			function _loadCaptcha() {
+				_captchaForm = document.querySelector("#_g-recaptcha").closest("form");
+				_captchaSubmit = _captchaForm.querySelector('[type=submit]');
+				_submitForm = function () {
+					if (typeof _submitEvent === "function") {
+						_submitEvent();
+						grecaptcha.reset();
+					} else {
+						contactForm();
+					}
+				};
+				_captchaForm.addEventListener('submit', function (e) {
+					e.preventDefault();
+					if (typeof _beforeSubmit === 'function') {
+						_execute = _beforeSubmit(e);
+					}
+					if (_execute) {
+						grecaptcha.execute();
+					}
+				});
+			} 
+		</script>
 	@endif
 @endsection
