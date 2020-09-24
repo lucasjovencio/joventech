@@ -16,7 +16,7 @@ Com auxilio de um docker [Docker](https://github.com/lucasjovencio/docker-larave
 ## Execute os commandos na ordem, na raiz do projeto.
 - git submodule update --init --recursive
 - Configure o .env do laravel com as conexões da base de dados mysql e redis do docker.
-- docker-composer up -d
+- docker-compose up -d
 - docker exec -it laravel bash
 - composer install --optimize-autoloader
 - php artisan dev:install
